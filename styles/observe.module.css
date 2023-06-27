@@ -1,0 +1,10 @@
+.observe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--raleway, sans-serif);
+    font-weight: 900;
+    font-size: 30px;
+    user-select: none;
+}

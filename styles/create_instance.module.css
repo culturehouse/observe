@@ -1,0 +1,405 @@
+.world {
+  background-color: #f8f7f3;
+  margin-top: 0px;
+  width: 100%;
+  /* min-height: 100vh; */
+  /* min-height: 100vh; */
+  /* min-width: 110vw; */
+  overflow: hidden;
+
+  /* min-width: 100vw; */
+  display: flex;
+  flex-direction: column;
+}
+
+.border {
+	/* background-color: #F8F7F3; */
+	/* background-color: #AC529F; */
+	/* height: 90vh; */
+	margin: 30px 40px;
+	text-align: center;
+	font-family: var(--raleway, sans-serif);
+	/* font-style: normal; */
+	/* font-weight: 800; */
+	/* font-size: 30px; */
+	/* line-height: 35px; */
+	/* color: #221f20; */
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	z-index: 99999;
+}
+
+.sidebar {
+	margin-top: 29px;
+	display: flex;
+	justify-content: center;
+	width: 120px;
+	flex-direction: column;
+	align-items: center;
+	/* position: 'absolute'; */
+	border-style: none;
+	/* border-color: #3c3b3c; */
+	border-radius: 30px;
+	background-color: #ffffff;
+}
+
+.leftContent {
+	/* background-color: red; */
+	display: flex;
+	position: relative;
+}
+
+.drawbutton {
+	position: relative;
+	margin: 140;
+	border: none;
+	background: none;
+	padding-bottom: 6px;
+	padding-top: 3px;
+}
+
+.drawbutton:hover {
+	background-color: #d4d3d3;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.drawbuttonClicked {
+	position: relative;
+	margin: 140;
+	border: none;
+	background: none;
+	padding-bottom: 6px;
+	padding-top: 3px;
+	background-color: #d4d3d3;
+	/* border: #221f20;
+	border-style: solid; */
+	border-radius: 20px;
+}
+
+.drawbuttonClicked:hover {
+	cursor: pointer;
+}
+
+.canvasmain {
+
+	width: 558px;
+	margin-left: 20px;
+	height: 591px;
+}
+
+.canvasmain canvas {
+	margin-top: 10px;
+	border-width: 500;
+	border-style: solid;
+	border-color: #3b3b3b;
+	border-radius: 25px;
+	cursor: pointer;
+}
+
+.sendButton {
+	text-align: center;
+	width: 218px;
+	height: 49px;
+	left: 1214px;
+	top: 863px;
+	margin-top: 30px;
+	align-self: flex-end;
+	background: #221f20;
+	border-radius: 30px;
+	border-style: solid;
+	border-color: #221f20;
+	/* border-color: black; */
+}
+
+.sendButton:hover {
+	background-color: #58595B;
+	border-color: #58595B;
+	cursor: pointer;
+}
+
+.clearButton {
+	margin-left: 10px;
+}
+.canvas {
+	margin-top: 0px;
+}
+.content {
+	/* background-color: red; */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	/* justify-self: center; */
+	justify-content: center;
+
+}
+
+.body {
+	background-color: #f8f7f3;
+}
+
+.upload {
+	font-size: 30px;
+	font-family: var(--raleway, sans-serif);
+	margin-left: 151px;
+	margin-bottom: 7px;
+}
+
+.sketch {
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 35px;
+	line-height: 21px;
+	text-align: left;
+}
+.create {
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 900;
+	font-size: 30px;
+	line-height: 47px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.volunteer {
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 21px;
+	margin-bottom: 8px;
+	text-align: left;
+}
+
+.inputFields {
+	margin-top: 35px;
+	/* margin-left: 50px; */
+	/* margin: 40px 50px 0; */
+	flex-direction: column;
+	display: flex;
+	width: 450px;
+}
+
+.volbox {
+	width: 449px;
+	height: 54px;
+	left: 910px;
+	top: 311px;
+
+	background: #ffffff;
+	/* border: 1px solid #221f20; */
+	border-radius: 30px;
+	box-sizing: border-box;
+	/* width: 449px; */
+	/* height: 54px; */
+	/* left: 532px; */
+	/* top: 532px; */
+
+	/* background: #FFFFFF; */
+	border: 1px solid #B3B3B3;
+	/* border-radius: 30px; */
+	padding: 12px 20px;
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.dateTime {
+	flex-direction: row;
+	display: flex;
+}
+
+.date {
+	flex-direction: column;
+	display: flex;
+	margin-right: 0px;
+}
+
+.dateSpacing {
+	width: 100%;
+}
+
+.dateBox {
+	width: 197px;
+	height: 54px;
+	left: 910px;
+	top: 438px;
+
+	background: #ffffff;
+	border: 1px solid #b3b3b3;
+	border-radius: 30px;
+
+	padding: 12px 20px;
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.invaliddateBox {
+	width: 197px;
+	height: 54px;
+	left: 910px;
+	top: 438px;
+
+	background: #ffffff;
+	border: 1px solid #db0000;
+	border-radius: 30px;
+
+	color: #db0000;
+
+	padding: 12px 20px;
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.noteBox {
+	width: 449px;
+	height: 139px;
+	left: 910px;
+	top: 692px;
+
+	background: #ffffff;
+	border: 1px solid #b3b3b3;
+	border-radius: 30px;
+
+	padding: 12px 20px;
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 600;
+	font-size: 15px;
+
+	resize: none;
+}
+
+.InstButton {
+	text-align: center;
+
+	font-family: var(--raleway, sans-serif);
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	/* identical to box height */
+
+	color: #ffffff;
+}
+
+.tableHeaderButton {
+	font-size: 18px;
+	font-weight: 700;
+	font-family: var(--raleway, sans-serif);
+	border-style: none;
+	text-align: center;
+	width: 80%;
+	height: 32px;
+	border-radius: 16px;
+}
+
+.tableHeaderButton:focus {
+	border: 2px solid #b3b3b3;
+}
+
+.spacing_drawbutton {
+	height: 40px;
+}
+
+.inputFieldsSpacing {
+	height: 20px;
+}
+
+.undoSpan {
+	width: 50px;
+	height: 50px;
+	background-color: #171717;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 900;
+	color: white;
+	flex-shrink: 0;
+	margin-left: 30px;
+	margin-top: 30px;
+}
+
+.undoSpan:hover {
+    cursor: pointer;
+    background-color: #58595B;
+}
+
+.undoSpan:active {
+	cursor: pointer;
+	background-color: #717275;
+}
+
+.undoSpan svg {
+	width: 40px;
+	height: auto;
+	color: white;
+}
+
+.outer {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	z-index: 10;
+}
+
+.separator {
+	width: 6vw;
+	/* width: 40px; */
+}
+
+.picture {
+	position: absolute;
+	z-index: -1;
+	/* left: 18vw; */
+	right: -2px;
+	top: 32px;
+	/* top: 11px; */
+	border-radius: 25px;
+	/* top: 194px; */
+}
+
+.pictureViewInstance {
+	position: absolute;
+	z-index: -1;
+	/* left: 18vw; */
+	right: -2px;
+	/* top: 32px; */
+	top: 11px;
+	border-radius: 25px;
+	/* top: 194px; */
+}
+
+
+.densityGraph {
+    position: absolute;
+	/* left: 250px; */
+	/* top: 22px; */
+	/* left: 50px; */
+	top: 11px;
+	left: 21px;
+	height: 558px;
+	width: 558px;
+	z-index: 5;
+	/* background-color: white; */
+}
+
+.fahrenheit {
+	position: absolute;
+	margin-top: 48px;
+	/* Note: margin-left property set dynamically based on 
+	         temperature input length in jsx file */
+	user-select: none;
+	font-family: var(--raleway, sans-serif);
+	font-weight: 600;
+	pointer-events: none; /* Note: may not work with legacy browsers and IE11 */
+}

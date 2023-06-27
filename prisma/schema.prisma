@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type AggregateSnsData {
+  position String
+  xcor     Int
+  ycor     Int
+}
+
+type DataSnsData {
+  position String
+  xcor     Int
+  ycor     Int
+}
+
+model AggregateSNS {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  data            DataSnsData[]
+  instances       String[] @db.ObjectId
+  filterQuery     String[]
+  name            String
+  np_sub          String                   
+  eventId         String   @db.ObjectId
+  num_instances   Int
+  notes		        String
+  dateCreated 	  DateTime   @db.Date
+  dateModified    DateTime   @db.Date
+  imageUploaded   Boolean
+}
+
+model DataSNS {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  data             DataSnsData[]
+  dateTime         DateTime      @db.Date
+  notes            String
+  temperature      Int
+  time             String
+  volunteerName    String
+  weather          String
+  np_sub           String
+  eventId          String   @db.ObjectId
+}
+
+model Events {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  date      String
+  eCode     String
+  location  String
+  notes     String
+  npId      String @db.ObjectId
+  np_sub    String
+  projectId String @db.ObjectId
+  time      String
+  title     String
+  imageUploaded   Boolean
+}
+
+model EventsTest {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  date     String
+  location String
+  notes    String
+  time     String
+  title    String
+  np_sub   String
+  projectID String   @db.ObjectId
+  npId         String   @db.ObjectId
+}
+
+model NonProfits {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  projects String[] @db.ObjectId
+  username String
+  np_sub   String
+}
+
+model Projects {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  current      Boolean
+  description  String
+  events       String[] @db.ObjectId
+  headerImage  String
+  name         String
+  npId         String   @db.ObjectId
+  np_sub       String
+  imageUploaded   Boolean
+}

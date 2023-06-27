@@ -1,0 +1,99 @@
+.buttonCreate {
+    background-color: #221F20;
+    width: 185px;
+    height: 50px;
+    font-size: 14px;
+    border-radius:30px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonCreate:hover {
+    background-color: #58595B;
+    cursor: pointer;
+}
+
+.buttonLogout {
+    background-color: white;
+    width: 100px;
+    height: 40px;
+    font-size: 14px;
+    border-radius:30px;
+    border: 2px black solid;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonLogout:hover {
+    background-color: rgb(219, 219, 219);
+    cursor: pointer;
+}
+
+.buttonUnder{
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.buttonUnder:hover {
+    color: #58595B;
+    cursor: pointer;
+}
+
+.buttonBack{
+    color: #221F20;
+    width: 38.94px;
+    height: 37.97px;
+}
+
+.buttonBack:hover {
+    color: #58595B;
+    cursor: pointer;
+}
+
+.buttonEdit{
+    background-color: #221F20;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonEdit:hover {
+    background-color: #58595B;
+    cursor: pointer;
+}
+
+.buttonFor{
+    background: #221F20;
+    width: 61px;
+    height: 61px;
+    border-radius: 50%;
+    color:#FFFFFF;
+    border-color: #221F20;
+    text-align: center;
+    line-height: 58px;
+}
+
+.buttonBack2{
+    width: 61px;
+    height: 61px;
+    background: #b3b3b3;
+    border-radius: 50%;
+    color:#221F20;
+    border-color:#b3b3b3;
+    text-align: center;
+    line-height: 58px;
+}
+
+.text{
+    opacity: 40%;
+    width: 100%;
+}

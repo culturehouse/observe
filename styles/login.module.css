@@ -1,0 +1,512 @@
+.world {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #F8F5F3;
+    overflow: hidden;
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    flex-direction: column;
+}
+
+.loginHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+
+
+    color: #000000;
+}
+
+.loginHeader h3 {
+    font-weight: 900;
+    font-size: 60px;
+    line-height: 150px;
+}
+
+.loginHeader h3 svg {
+    padding-top: 15px;
+
+    height: 60px;
+    width: auto;
+}
+
+.loginHeader h5 {
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 40px;
+}
+
+.titleCon {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 6vh;
+}
+/*
+.marginh5 {
+    margin-bottom: 5vh;
+} */
+
+/* .info {
+    color: black;
+    font-size: 30px;
+} */
+
+.titleCon svg {
+    margin-top: 5px;
+    display: flex;
+    justify-self: center;
+    color: black;
+    height: 25px;
+    width: auto;
+}
+
+.titleCon svg:hover{
+    color:gray;
+    cursor: pointer;
+}
+
+.loginHeader h6 {
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.form {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.invalidInput {
+    padding: 12px 20px;
+    display: flex;
+    align-self: center;
+    margin: 10px;
+    box-sizing: border-box;
+    width: 449px;
+    height: 54px;
+    left: 532px;
+    top: 532px;
+
+    background: #FFFFFF;
+    border: 1px solid #B3B3B3;
+    border-radius: 30px;
+    border-color: red;
+
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    color: red;
+}
+
+
+
+.validInput {
+    padding: 12px 20px;
+    display: flex;
+    align-self: center;
+    margin: 10px;
+    box-sizing: border-box;
+    width: 449px;
+    height: 54px;
+    left: 532px;
+    top: 532px;
+
+    background: #FFFFFF;
+    border: 1px solid #B3B3B3;
+    border-radius: 30px;
+
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+
+    color: black;
+}
+
+.form input::placeholder {
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+
+    color: #58595B;
+}
+
+.submitDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.logButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 313px;
+    height: 54px;
+    left: 600px;
+    top: 745px;
+
+    background: #221F20;
+    border-radius: 30px;
+    border-color: #221F20;
+    border-style: solid;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #FFFFFF;
+}
+
+.logButton:hover {
+    background: #373435;
+    cursor: pointer;
+}
+
+.logButtoni {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 313px;
+    height: 54px;
+    left: 600px;
+    top: 745px;
+
+    background: #656565;
+    border-radius: 30px;
+    border-color: #504b4d;
+    border-style: solid;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #b0aeae;
+}
+
+.forgotPassword {
+    font-family: var(--raleway, sans-serif);
+    display: flex;
+    justify-content: flex-end;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 23px;
+
+    color: #000000;
+}
+
+.quadContainer {
+    display: flex;
+    width: 20vw;
+    height: auto;
+    position: absolute;
+    right: 0vw;
+    top: 0vh;
+    background-image: "../public/Quad.png";
+}
+
+.quadContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.quadLineContainer {
+    display: flex;
+    width: 22vw;
+    height: auto;
+    position: absolute;
+    right: 0vw;
+    top: 0vh;
+}
+
+.quadLineContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.circleContainer {
+    display: flex;
+    width: 21vw;
+    height: auto;
+    position: absolute;
+    left: 0vw;
+    top: 0vh;
+}
+
+.circleContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.pentagonContainer {
+    display: flex;
+    width: 13vw;
+    height: auto;
+    position: absolute;
+    left: 0vw;
+    bottom: 0vh;
+}
+
+.pentagonContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.logoContainer {
+    display: flex;
+    align-self: center;
+    width: 20vw;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.logoContainer img {
+    width: 100%;
+    height: auto;
+}
+
+.ntrp {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    /* text-align: center; */
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    color: #000000;
+    min-width: 430px; /* prevent annoying wrapping of links vs rest of text */
+}
+
+.fp {
+    display: flex;
+    justify-content: flex-end;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    color: black;
+    font-weight: 700;
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+.fp:hover {
+    /* color: #615959; */
+    color: #58595B;
+}
+
+.link {
+    color: black;
+}
+
+.link:hover {
+    color: #58595B;
+}
+
+.b1Pentagon {
+    display: flex;
+    width: 22vw;
+    height: auto;
+    position: fixed;
+    right: 0vw;
+    bottom: 0vh;
+}
+
+.b1Pentagon img {
+    width: 100%;
+    height: auto;
+}
+
+.b1Circle {
+    display: flex;
+    width: 18vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    top: 26vh;
+    z-index: inherit;
+}
+
+.b1Circle img {
+    width: 100%;
+    height: auto;
+}
+
+.b1CircleLine {
+    display: flex;
+    width: 12vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    top: 18vh;
+}
+
+.b1CircleLine img {
+    width: 100%;
+    height: auto;
+}
+
+.b1PentagonLine {
+    display: flex;
+    width: 16vw;
+    height: auto;
+    position: fixed;
+    right: 0vw;
+    bottom: 0vh;
+}
+
+.b1PentagonLine img {
+    width: 100%;
+    height: auto;
+}
+
+.b2Triangle {
+    display: flex;
+    width: 24vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    bottom: 0vh;
+}
+
+.b2Triangle img {
+    width: 100%;
+    height: auto;
+}
+
+.b2TriangleLine {
+    display: flex;
+    width: 18vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    bottom: 0vh;
+}
+
+.b2TriangleLine img {
+    width: 100%;
+    height: auto;
+}
+
+.b2Pentagon {
+    display: flex;
+    width: 15vw;
+    height: auto;
+    position: fixed;
+    right: -4vw;
+    top: 24vh;
+}
+
+.b2Pentagon img {
+    width: 100%;
+    height: auto;
+}
+
+.b2TriangleLine2 {
+    display: flex;
+    width: 14vw;
+    height: auto;
+    position: fixed;
+    right: -7vw;
+    top: 23vh;
+}
+
+.b2TriangleLine2 img {
+    width: 100%;
+    height: auto;
+}
+
+.b3Pentagon {
+    display: flex;
+    width: 12vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    bottom: -28vh;
+}
+
+.b3Pentagon img {
+    width: 100%;
+    height: auto;
+}
+
+.b3PentagonLine {
+    display: flex;
+    width: 10.5vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    bottom: -5vh;
+}
+
+.b3PentagonLine img {
+    width: 100%;
+    height: auto;
+}
+
+.b3Circle {
+    display: flex;
+    width: 12vw;
+    height: auto;
+    position: fixed;
+    right: 0vw;
+    top: 10vh;
+}
+
+.b3Circle img {
+    width: 100%;
+    height: auto;
+}
+
+.b3CircleLine {
+    display: flex;
+    width: 17vw;
+    height: auto;
+    position: fixed;
+    right: 0vw;
+    top: 16vh;
+}
+
+.b3CircleLine img {
+    width: 100%;
+    height: auto;
+}
+
+.bottom1 {
+    display: flex;
+    width: 100vw;
+    height: auto;
+    position: fixed;
+    left: 0vw;
+    bottom: 0vh;
+}
+
+.bottom1 img {
+    width: 100%;
+    height: auto;
+}

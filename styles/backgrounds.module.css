@@ -1,0 +1,14 @@
+.b1Circle {
+    width: 20vw;
+    height: auto;
+    right: 0vw;
+    top: 0vh;
+    background-image: "/Background1Circle.png";
+    z-index: -100;
+}
+
+.b1Circle img {
+    width: 100%;
+    height: auto;
+    z-index: -100;
+}

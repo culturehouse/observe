@@ -1,0 +1,45 @@
+.world {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #F8F5F3;
+    overflow: hidden;
+}
+
+.text {
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 900;
+    font-size: 40px;
+
+    color: #000000;
+}
+
+.loginButton {
+    margin-top: 5vh;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+
+    color: #000000;
+}
+
+.link {
+    color: black;
+}
+
+.link:hover {
+    color: #58595B;
+    cursor: pointer;
+}
+
+.chevron {
+    font-size: 20px;
+    margin-left: 5px;
+}

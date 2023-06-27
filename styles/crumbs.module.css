@@ -1,0 +1,67 @@
+.crumbs {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    flex-direction: row;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+
+    color: #615959;
+}
+
+.crumbLink {
+    /* display: flex;
+    flex-direction: row; */
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    color: #615959;
+}
+
+.crumbLink:hover {
+    color: #969696;
+}
+
+.crumbLink svg {
+    vertical-align: middle;
+    margin-bottom: 2px;
+}
+
+.crumbEnding {
+    /* display: flex;
+    flex-direction: row; */
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+
+    color: #000000;
+}
+
+.backButton {
+    /* display: flex;
+    flex-direction: row; */
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+    text-decoration: none;
+    vertical-align: middle;
+
+    color: #000000;
+}
+
+.backButton svg:hover {
+    color: #5e5d5d;
+}
+
+.backButton svg {
+    vertical-align: text-bottom;
+    margin-bottom: 5px;
+}

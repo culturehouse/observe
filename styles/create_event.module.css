@@ -1,0 +1,308 @@
+.dimmer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 999999;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: fixed;
+    z-index: 99999999;
+    min-width: 500px;
+    width: 50%;
+    max-width: 750px;
+
+    /* height: 60%;  */
+    background-color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    border-radius: 25px;
+    text-align: center;
+    font-family: var(--raleway, sans-serif);
+    color: #221F20;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 10px rgba(88, 89, 91, 0.15);
+}
+
+.textInput {
+    width: 60%;
+    padding: 15px;
+    border-radius: 25px;
+    /* border-color: lightgray; */
+    /* border-style: solid; */
+    border: 2px solid lightgray;
+    outline: none;
+    font-family: var(--raleway, sans-serif);
+    font-size: 18px;
+}
+
+.textInput:focus {
+    border-color: black;
+}
+
+.fieldTitle {
+    /* background-color: red; */
+    /* position: relative; */
+    /* right: 25%; */
+    padding-bottom: 10px;
+    text-align: left;
+    width: 63%;
+    margin: auto;
+}
+
+.closeButton{
+    float: right;
+    position: absolute;
+    margin: 20px;
+    right: 0;
+    top: 0;
+    z-index: 9999999;
+    cursor: pointer;
+    /* background-color: red; */
+}
+
+.closeButton:hover {
+    color: #58595B;
+}
+
+.title {
+    text-align:center;
+    font-family: var(--raleway, sans-serif);
+    font-style: bolder;
+    font-weight: 900;
+    font-size: 25px;
+    line-height: 35px;
+}
+
+.openStatus{
+    font-size: 10px;
+    font-style: bold;
+}
+
+.createProject{
+    float: right;
+    cursor: pointer;
+}
+
+
+.checkboxContainer {
+    display: flex;
+    position: relative;
+    margin-bottom: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 130px;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 20%;
+    padding-bottom: 10px;
+}
+
+.checkbox { /* hide the browser's default checkbox */
+    position: absolute;
+    left: 0%;
+    bottom: 7px;
+    opacity: 0;
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+    z-index: 9999999;
+
+}
+
+.checkmark { /* actually visible */
+    position: absolute;
+    bottom: 7px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+/* On mouse-over, add a grey background color */
+/* .checkboxContainer:hover input ~ .checkmark { */
+    /* background-color: #eee; */
+/* } */
+
+  /* When the checkbox is checked, add a blue/black background */
+.checkboxContainer input:checked ~ .checkmark {
+    /* background-color: #2196F3; */
+    background-color: black;
+}
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+.checkboxContainer:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+  /* Show the checkmark when checked */
+.checkboxContainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+  /* Style the checkmark/indicator */
+.checkboxContainer .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkboxText {
+    position: relative;
+    left: 10px;
+}
+
+.fileSelectContainer {
+    width: 60%;
+    display: flex;
+    margin: auto;
+    gap: 10px;
+    /* background-color: red; */
+}
+
+.x {
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+}
+
+.x:hover {
+    cursor: pointer;
+    color: #58595B;
+}
+
+.fileContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 15px;
+    align-items: center;
+}
+
+.fileInput {
+    display: none;
+}
+
+.fileContainer:hover {
+    cursor: pointer;
+    color: #58595B;
+}
+
+.popupEllipse {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.popupPolygon {
+    position: absolute;
+    left: 0;
+    top: 30%;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.successContainer {
+    position:fixed;
+    z-index: 99999999;
+    min-width: 500px;
+    width: 50%;
+    max-width: 750px;
+
+    /* height: 60%;  */
+    background-color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    border-radius: 25px;
+    text-align: center;
+    font-family: var(--raleway, sans-serif);
+    color: #221F20;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 10px #e0e0e0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.border {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.eventCode {
+    background-color: #FFFFFF;
+    /* background-color: tomato; */
+    width: 170px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+    border: 1px black solid;
+    /* gap: 40px; */
+    /* flex-shrink: 1; */
+}
+
+/* .buttonCode {
+    background-color: red;
+} */
+
+.copied {
+    /* position: relative;
+    display: flex;
+    align-items: center;
+    align-self: left;
+    width: fill;
+    flex-shrink: 200;
+    margin-left: 10px; */
+    /* position: relative;
+    left: 50px; */
+    height: 40px;
+    position: absolute;
+    left: 68%;
+    display: flex;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.flexRow {
+    position: relative;
+    display: flex;
+    /* background-color: aqua; */
+    width: 100%;
+    justify-content: center;
+    /* margin-left: 50%; */
+}

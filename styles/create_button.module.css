@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    /* background-color: #58595B; */
+    width: 150px;
+    border-radius: 20px;
+}
+
+.container:hover {
+    background-color: #58595B;
+}
+
+.dd_button {
+    display: flex;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-size: 16px;
+    color: #000000;
+    background-color: #58595B;
+    /* background-color: black; */
+}
+
+.dd_item a {
+    display: flex;
+    font-family: var(--raleway, sans-serif);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #221F20;
+    /* background-color: red; */
+    align-items: center;
+    height: 32px;
+}
+
+.plus {
+    margin-right: 7px;
+}
