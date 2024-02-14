@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+// import { UserProvider } from '@auth0/nextjs-auth0/client';
 import "../styles/globals.css"
 import { Raleway } from 'next/font/google';
 
@@ -13,9 +13,9 @@ export default function App({ Component, pageProps }) {
           --raleway: ${raleway.style.fontFamily}, sans-serif;
         }
       `}</style>
-      <UserProvider>
+      {/* <UserProvider> */}
         <Component {...pageProps} />
-      </UserProvider>
+      {/* </UserProvider> */}
     </>
   );
 }

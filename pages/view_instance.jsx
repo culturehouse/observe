@@ -1,33 +1,11 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-
-import Image from 'next/image'
-import clientPromise from '../lib/mongodb'
 import styles from "../styles/view_instance.module.css"
 import ObserveLogo from "../components/ObserveLogo";
-
 import Crumbs from '../components/Crumbs'
 import CanvasViewInstance from "../components/CanvasViewInstance";
-import DensityGraph from '../components/DensityGraph'
 import BackgroundBottom1 from "../components/BackgroundBottom1"
-
-
-// import { useNavigate } from 'react-router-dom';
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
 
 // next 20 lines are just for background display purposes
 // function getWindowDimensions() {
@@ -38,7 +16,7 @@ export async function getServerSideProps(context) {
 //   };
 // }
 
-export default function View_Event({isConnected}) {
+export default function View_Event() {
   const [instance, setInstance] = useState([{"title": "Loading..."}]);
   const [dataFetched, setDataFetched] = useState(false);
 

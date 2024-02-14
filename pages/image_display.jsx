@@ -1,41 +1,6 @@
-// for developer reference
+import { useState, useEffect } from 'react'
 
-import Head from 'next/head'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import Image from 'next/image'
-import clientPromise from '../lib/mongodb'
-import styles from "../styles/view_event.module.css"
-import culturehouse_logo from "../images/culturehouse_logo.png" 
-import heatmap_template from "../images/heatmap_template.png" 
-import Event from "./create_event.jsx"
-import btnstyles from "../styles/button.module.css"
-// import { useNavigate } from 'react-router-dom';
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
-
-export default function View_Event({isConnected}) {
+export default function View_Event() {
   const [dataFetched, setDataFetched] = useState(false);
 
   var id;

@@ -1,13 +1,8 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-
 import { useRouter } from 'next/router';
 import Image from 'next/image'
-
 import InstanceSelection from '../components/InstanceSelection';
-import DensityGraph from '../components/DensityGraph';
 import DensityGraphCreateHeatmap from '../components/DensityGraphCreateHeatmap';
 import Crumbs from '../components/Crumbs';
 import styles from "../styles/create_heatmap.module.css"
@@ -18,21 +13,7 @@ import NoAccess from "../components/NoAccess"
 import LoadingPage from '../components/LoadingPage';
 import BackgroundBottom4 from '../components/BackgroundBottom4';
 
-export async function getServerSideProps(context) {
-	try {
-		await clientPromise
-		return {
-			props: { isConnected: true },
-		}
-	} catch (e) {
-		console.error(e)
-		return {
-			props: { isConnected: false },
-		}
-	}
-}
-
-export default function Home({ isConnected}) {
+export default function Home() {
   const router = useRouter();
 	const [dataTypeFilter, setDataTypeFilter] = useState([
 		'sitting',

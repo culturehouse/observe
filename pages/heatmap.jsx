@@ -1,13 +1,6 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
-import DensityGraph from "../components/DensityGraph";
 import DensityGraphViewHeatmap from "../components/DensityGraphViewHeatmap";
-import Key from "../components/Key";
 import styles from "../styles/heatmap.module.css";
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import culturehouse_logo from "../images/culturehouse_logo.png";
-import scale from "../images/scale.png";
 import btnstyles from "../styles/button.module.css";
 import { jsPDF } from "jspdf";
 import InstanceSelection from "../components/InstanceSelection";
@@ -19,32 +12,7 @@ import NoAccess from "../components/NoAccess";
 import PleaseLogin from "../components/PleaseLogin"
 import BackgroundBottom2 from "../components/BackgroundBottom2"
 
-
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise;
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { isConnected: false },
-    };
-  }
-}
-
-export default function Heatmap({ isConnected }) {
+export default function Heatmap() {
   const [aggregateDataInstances, setAggregateDataInstances] = useState([]);
   const [hmap, setHmap] = useState([]);
   const [loading, setLoading] = useState(true)

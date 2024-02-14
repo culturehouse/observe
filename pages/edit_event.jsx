@@ -1,9 +1,7 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import styles from "../styles/create_event.module.css"
-import culturehouse_logo from "../images/culturehouse_logo.png" 
 import btnstyles from "../styles/button.module.css"
 import { BsImage } from "react-icons/bs"
 import { FiX } from "react-icons/fi"
@@ -26,24 +24,9 @@ const myBucket = new AWS.S3({
 
 // known bugs: update sketch doens't always work
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
-
 // function to post to database
 
-
-export default function Events({isConnected, setshowCreateEvent, eventInfo}) {
+export default function Events({setshowCreateEvent, eventInfo}) {
     console.log("eventInfo is ");
 
 

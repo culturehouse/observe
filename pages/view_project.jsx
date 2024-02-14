@@ -3,43 +3,21 @@ import Head from 'next/head'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import Image from 'next/image'
-import clientPromise from '../lib/mongodb'
-import styles from "../styles/view_event.module.css"
 import pstyles from "../styles/view_project.module.css"
-//import styles from "../styles/create_project.module.css"
-import Project from "./create_project.jsx"
-import btnstyles from "../styles/button.module.css"
 import Event from "./create_event.jsx"
 import EditProject from "./edit_project.jsx"
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import LoadingPage from '../components/LoadingPage'
 import ObserveLogo from '../components/ObserveLogo'
-
 import { RiCalendar2Fill } from "react-icons/ri"
 import { MdLocationOn } from "react-icons/md"
 import { RxPlus } from "react-icons/rx"
 import { RiPencilLine } from "react-icons/ri"
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi"
-import { BiMapPin } from "react-icons/bi"
 import Crumbs from "../components/Crumbs"
 import PleaseLogin from "../components/PleaseLogin"
 import NoAccess from '../components/NoAccess'
 import BackgroundBottom2 from '../components/BackgroundBottom2'
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
 
 // function date(eventInfo){
 //   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -53,16 +31,12 @@ export async function getServerSideProps(context) {
 //   let day = eventInfo[0]["date"];
 // }
 
-export default function View_Project({isConnected}) {
+export default function View_Project() {
   const [projectInfo, setProjectInfo] = useState([{"name": "Loading..."}]);
   const [dataFetched, setDataFetched] = useState(false);
-  const [attachFiles, setAttachFiles] = useState(false);
   const [showCreateEvent, setshowCreateEvent] = useState(false);
   const [eventInfo, setEventInfo] = useState([{"title": "Loading..."}]);
   const [current, setCurrent] = useState(true);
-  const [eventsFetched, setEventsFetched] = useState(false);
-
-
   const [showEditProject, setshowEditProject] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

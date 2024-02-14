@@ -1,20 +1,23 @@
 .world {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100%;
   width: 100%;
   min-height: 100vh;
   min-width: 100vw;
   background-color: #F8F5F3;
   overflow: hidden;
+  position: relative;
 }
 
 .loginContainer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 40%;
-  flex-direction: column;
+  height: 100%;
 }
 
 .loginHeader {
@@ -212,63 +215,6 @@
   line-height: 23px;
 
   color: #000000;
-}
-
-.quadContainer {
-  display: flex;
-  width: 20vw;
-  height: auto;
-  position: absolute;
-  right: 0vw;
-  top: 0vh;
-  background-image: "../public/Quad.png";
-}
-
-.quadContainer img {
-  width: 100%;
-  height: auto;
-}
-
-.quadLineContainer {
-  display: flex;
-  width: 22vw;
-  height: auto;
-  position: absolute;
-  right: 0vw;
-  top: 0vh;
-}
-
-.quadLineContainer img {
-  width: 100%;
-  height: auto;
-}
-
-.circleContainer {
-  display: flex;
-  width: 21vw;
-  height: auto;
-  position: absolute;
-  left: 0vw;
-  top: 0vh;
-}
-
-.circleContainer img {
-  width: 100%;
-  height: auto;
-}
-
-.pentagonContainer {
-  display: flex;
-  width: 13vw;
-  height: auto;
-  position: absolute;
-  left: 0vw;
-  bottom: 0vh;
-}
-
-.pentagonContainer img {
-  width: 100%;
-  height: auto;
 }
 
 .logoContainer {

@@ -1,36 +1,11 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
 import { useState, useEffect } from "react";
 import ReactCodeInput from "react-code-input";
 import LoginBackground from "../components/LoginBackground";
-
 import styles from "../styles/volunteer.module.css";
 import { useRouter } from "next/router";
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise;
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { isConnected: false },
-    };
-  }
-}
-
-export default function Home({ isConnected }) {
+export default function Home() {
   const [name, setName] = useState("");
   const [validCode, setValidCode] = useState(false);
   const [correctCode, setCorrectCode] = useState();
@@ -51,7 +26,7 @@ export default function Home({ isConnected }) {
           router.push(`./volunteerInput/${r.eventId}`);
         } else {
           setCorrectCode(false);
-          alert("Please make sure you enter the correct event id")
+          alert("Please make sure you enter the correct event id");
         }
       });
     // router.push("./second");
@@ -59,13 +34,13 @@ export default function Home({ isConnected }) {
 
   useEffect(() => {
     function handleKeyDown(event) {
-      if (event.key === 'Enter') {
-        document.getElementById('btn-login').click();
+      if (event.key === "Enter") {
+        document.getElementById("btn-login").click();
       }
     }
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -78,15 +53,13 @@ export default function Home({ isConnected }) {
     }
   };
 
-
   return (
     <>
       <Head>
-        <title>
-          Volunteer login | Observe
-        </title>
+        <title>Volunteer login | Observe</title>
       </Head>
       <div className={styles.world}>
+        <LoginBackground />
         <div className={styles.loginContainer}>
           <div className={styles.loginHeader}>
             {/* <div className={styles.logoContainer}>
@@ -108,25 +81,51 @@ export default function Home({ isConnected }) {
                 <ReactCodeInput fields={6} onChange={handleCodeChange} />
               </div>
               {/* <div className={styles.forgotPassword}>Forgot Password?</div> */}
-              {(validCode) ?
+              {validCode ? (
                 <div className={styles.submitDiv}>
-                  <button type="button" id="btn-login" className={styles.logButton} onClick={()=> navigate()} data-turbo="false">LOGIN</button>
+                  <button
+                    type="button"
+                    id="btn-login"
+                    className={styles.logButton}
+                    onClick={() => navigate()}
+                    data-turbo="false"
+                  >
+                    LOGIN
+                  </button>
                 </div>
-                :
+              ) : (
                 <div className={styles.submitDiv}>
-                  <button type="button" id="btn-login" className={styles.logButtoni} onClick={() => navigate()} data-turbo="false" disabled>LOGIN</button>
+                  <button
+                    type="button"
+                    id="btn-login"
+                    className={styles.logButtoni}
+                    onClick={() => navigate()}
+                    data-turbo="false"
+                    disabled
+                  >
+                    LOGIN
+                  </button>
                 </div>
-              }
-
+              )}
             </form>
           </div>
           <div className={styles.userpassword}></div>
-          <LoginBackground />
-          <div className={styles.ntrp}> Not the right page?&nbsp; <a href="/login" className={styles.link}>Log in as an admin</a>&nbsp;or&nbsp;<a href="/register" className={styles.link}>sign up</a>&nbsp;instead</div>
+          <div className={styles.ntrp}>
+            {" "}
+            Not the right page?&nbsp;{" "}
+            <a href="/login" className={styles.link}>
+              Log in as an admin
+            </a>
+            &nbsp;or&nbsp;
+            <a href="/register" className={styles.link}>
+              sign up
+            </a>
+            &nbsp;instead
+          </div>
         </div>
       </div>
     </>
-  )
+  );
 
   // return (
   //   <div>

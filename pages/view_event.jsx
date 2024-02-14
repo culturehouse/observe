@@ -1,21 +1,15 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-
-import Image from 'next/image'
-import clientPromise from '../lib/mongodb'
 import styles from "../styles/view_event.module.css"
 import ObserveLogo from "../components/ObserveLogo";
 import btnstyles from "../styles/button.module.css"
-
-// import EditEvent from "../components/edit_event.jsx"
 import EditEvent from "./edit_event.jsx"
 import Link from 'next/link'
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi"
-import { BsCalendarEvent, BsChevronLeft, BsChevronRight } from "react-icons/bs"
-// import { CgAttachment } from "react-icons/cg"
+import { BsCalendarEvent, BsChevronRight } from "react-icons/bs"
 import { MdLocationOn } from "react-icons/md"
-import { BiCopy, BiMapPin } from "react-icons/bi"
+import { BiCopy } from "react-icons/bi"
 import { FiEdit2 } from "react-icons/fi"
 import DropDownButton from "../components/CreateButton"
 import Crumbs from '../components/Crumbs'
@@ -23,21 +17,6 @@ import LoadingPage from '../components/LoadingPage'
 import PleaseLogin from "../components/PleaseLogin"
 import NoAccess from '../components/NoAccess'
 import BackgroundBottom3 from '../components/BackgroundBottom3'
-// import { useNavigate } from 'react-router-dom';
-
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
 
 // next 20 lines are just for background display purposes
 // function getWindowDimensions() {
@@ -48,7 +27,7 @@ export async function getServerSideProps(context) {
 //   };
 // }
 
-export default function View_Event({isConnected}) {
+export default function View_Event() {
   const [eventInfo, setEventInfo] = useState([{"title": "Loading..."}]);
   const [dataFetched, setDataFetched] = useState(false);
   const [showCreateEvent, setshowCreateEvent] = useState(false);
@@ -237,9 +216,9 @@ export default function View_Event({isConnected}) {
             <p className={styles.noteText}>{eventInfo[0] ? eventInfo[0]["notes"] : "undefined"}</p>
           </div>
         </div>
-        <div className={styles.middleTitle}>
+        {/* <div className={styles.middleTitle}> */}
           {/* <h2 className={styles.observe}>Modes of data collection</h2> */}
-        </div>
+        {/* </div> */}
         <div className={styles.activityMappingContainer}>
           <h2 className={styles.maintitle}>Activity mapping</h2>
           <div className={styles.viewAll}>

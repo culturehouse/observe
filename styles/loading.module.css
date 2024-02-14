@@ -1,22 +1,21 @@
 .world {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: #F8F5F3;
-    overflow: hidden;
-    position: relative;
-    z-index: 99999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #F8F5F3;
+  overflow: hidden;
+  position: relative;
+  z-index: 99999999;
 }
 
-.loading{
-    font-family: var(--raleway, sans-serif);
-    font-style: normal;
-    font-weight: 900;
-    font-size: 120px;
-
-    color: #000000;
+.loading {
+  font-family: var(--raleway, sans-serif);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 120px;
+  color: #000000;
 }

@@ -1,7 +1,5 @@
-import prisma from '/helpers/prisma';
 import jwksClient from 'jwks-rsa';
 import jwt from 'jsonwebtoken';
-
 
 export const exposableErrors = [
   jwt.TokenExpiredError,

@@ -1,14 +1,10 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-
+// import { useUser } from '@auth0/nextjs-auth0/client';
 import { auth } from "../services/auth0.service"
 import LoadingPage from "../components/LoadingPage"
-// import PleaseLogin from "../components/PleaseLogin"
-// import { redirect } from 'next/navigation';
 import CreateProject from "./create_project";
-
 import styles from "../styles/home.module.css";
 import btnstyles from "../styles/button.module.css";
 import Image from "next/image";
@@ -17,30 +13,7 @@ import Link from 'next/link'
 import NoAccess from "../components/NoAccess"
 import BackgroundBottom1 from "../components/BackgroundBottom1"
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise;
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
-    return {
-      props: { isConnected: true },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      props: { isConnected: false },
-    };
-  }
-}
-
-export default function Home({ isConnected }) {
+export default function Home() {
   const [NPData, setNPData] = useState([{ "title": "Loading..." }]);
   const [dataFetched, setDataFetched] = useState(false);
   const [showHomePageP, setshowHomePageP] = useState(false);
@@ -49,11 +22,9 @@ export default function Home({ isConnected }) {
   const [projects, setProjects] = useState([]);
   const [events, setEvents] = useState([]);
   const [currTab, setTab] = useState("Current");
-  const [crumbs, setCrumbs] = useState({})
   const [creatingProject, setCreatingProject] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false)
   const [canAccess, setCanAccess] = useState(false)
-
 
   const router = useRouter()
   const path = router.asPath
@@ -65,8 +36,6 @@ export default function Home({ isConnected }) {
       hash
     }, function (error, result) {
       if (error) {
-        // console.log("Something is wrong");
-        // console.log(error)
         getPermission();
         return;
       }
@@ -120,21 +89,6 @@ export default function Home({ isConnected }) {
             },
             method: 'GET',
           }).then((data) => data.json()).then((res) => {
-            // console.log(res);
-            setEvents(res);
-          });
-        }
-        if (r.non_profit) {
-          const event_response = fetch(`/api/nonprofit_events/${r.non_profit[0].id}`, {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            },
-            method: 'GET',
-          }).then((data) => data.json()).then((res) => 
-          {
-            // console.log(res);
             setEvents(res);
           });
         }
@@ -172,7 +126,6 @@ export default function Home({ isConnected }) {
             method: 'GET',
           }).then((data) => data.json()).then((res) => 
           {
-            // console.log(res);
             setEvents(res);
           });
         }
@@ -223,7 +176,6 @@ export default function Home({ isConnected }) {
 
 
   const createProject = () => {
-    console.log("in createProject");
     const res = fetch("/api/home/createProject", {
       headers: {
         Accept: 'application/json',
@@ -267,9 +219,6 @@ export default function Home({ isConnected }) {
     if (!loggedIn) {
       router.push('/volunteer_login');
     } else if (NPData.dataFetched) {
-      console.log(NPData);
-      console.log(projects);
-      // console.log(events);
       return (
         <div className={styles.container}>
           <Head>
@@ -308,8 +257,6 @@ export default function Home({ isConnected }) {
             </div>
             <div className={styles.projects}>
               {projects.map(function (proj, i) {
-                // console.log(proj.hover);
-                // console.log(proj.name + (proj.hover ? " hovering" : " not hovering"))
                 let projdates = startAndEndDate(proj);
                 let eventsDisplayed = 0;
                 if (currTab == "Current" && proj.current || 

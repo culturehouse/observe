@@ -1,14 +1,4 @@
 import prisma from '/helpers/prisma';
-// import jwksClient from 'jwks-rsa';
-// import jwt from 'jsonwebtoken';
-import permission from '../permission';
-
-// export const exposableErrors = [
-//   jwt.TokenExpiredError,
-//   jwt.JsonWebTokenError,
-//   jwt.NotBeforeError,
-// ];
-
 
 export default async function createNonProfit(req, res) {
     // checks if the request method is a GET

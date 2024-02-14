@@ -1,29 +1,11 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
 import React, { useState } from "react";
 import { auth } from "../services/auth0.service"
 import LoginBackground from "../components/LoginBackground";
-import Image from "next/image";
 import { BiMapPin } from  "react-icons/bi"
-
 import styles from "../styles/login.module.css"
-import { AUTH0_CLIENT_ID, AUTH0_LOGIN_REDIRECT_URI, AUTH0_LOGIN_RESPONSE_TYPE, AUTH0_REALM } from "../services/config";
 
-export async function getServerSideProps(context) {
-    try {
-        await clientPromise;
-        return {
-            props: { isConnected: true },
-        };
-    } catch (e) {
-        console.error(e);
-        return {
-            props: { isConnected: false },
-        };
-    }
-}
-
-export default function Login({ isConnected }) {
+export default function Login() {
     const [user, setUser] = useState({ email: "", valid: false});
     const email_regex = new RegExp('^[A-Za-z0-9_!#\$%&\*+/=?\`{}~\^\.-]+@[A-Za-z0-9\.-]+[\.][A-Za-z0-9]+$');
 

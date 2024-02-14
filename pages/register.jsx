@@ -1,30 +1,13 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
 import React, { useState, useEffect } from "react";
 import { auth } from "../services/auth0.service"
 import LoginBackground from "../components/LoginBackground";
 import { AiFillInfoCircle } from 'react-icons/ai';
 import RegisterInfo from "../components/RegisterInfo";
 import { BiMapPin } from "react-icons/bi"
-
 import styles from "../styles/login.module.css"
-import { AUTH0_CLIENT_ID, AUTH0_LOGIN_REDIRECT_URI, AUTH0_LOGIN_RESPONSE_TYPE, AUTH0_REALM } from "../services/config";
 
-export async function getServerSideProps(context) {
-    try {
-        await clientPromise;
-        return {
-            props: { isConnected: true },
-        };
-    } catch (e) {
-        console.error(e);
-        return {
-            props: { isConnected: false },
-        };
-    }
-}
-
-export default function Register({ isConnected }) {
+export default function Register() {
     const [user, setUser] = useState({name: "", email: "", password: "" , username: ""});
     const [inputVerified, setinputVerified] = useState({name: false, username: false, email:false, password: false})
     const [infoDisplay, setinfoDisplay] = useState(false);
@@ -89,7 +72,7 @@ export default function Register({ isConnected }) {
             username: user.username,
             email: user.email, 
             password: user.password,
-            connection: AUTH0_REALM,
+            connection: process.env.NEXT_PUBLIC_AUTH0_REALM,
         }, function(error, result) {
             if (error) {
                 console.log("Registration went wrong");
@@ -119,9 +102,9 @@ export default function Register({ isConnected }) {
                 auth.login({
                     username: user.username,
                     password: user.password,
-                    realm: AUTH0_REALM,
-                    redirectUri: AUTH0_LOGIN_REDIRECT_URI,
-                    responseType: AUTH0_LOGIN_RESPONSE_TYPE,
+                    realm: process.env.NEXT_PUBLIC_AUTH0_REALM,
+                    redirectUri: process.env.NEXT_PUBLIC_AUTH0_LOGIN_REDIRECT_URI,
+                    responseType: process.env.NEXT_PUBLIC_AUTH0_LOGIN_RESPONSE_TYPE,
                 }, function (error, result) {
                     if (error) {
                         console.log("Oops! Login Failed")

@@ -1,10 +1,7 @@
 import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import Image from 'next/image'
 import styles from "../styles/create_event.module.css"
-import culturehouse_logo from "../images/culturehouse_logo.png" 
 import btnstyles from "../styles/button.module.css"
 import { BsImage } from "react-icons/bs"
 import { FiX } from "react-icons/fi"
@@ -25,23 +22,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 })
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-   
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
-
-
-export default function Projects({isConnected, setshowEditProject, id, setLoggedIn, setCanAccess}) {
+export default function Projects({setshowEditProject, id, setLoggedIn, setCanAccess}) {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");

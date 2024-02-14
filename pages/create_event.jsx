@@ -1,10 +1,7 @@
-import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
-import { useEffect, ChangeEvent, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import styles from "../styles/create_event.module.css"
-import culturehouse_logo from "../images/culturehouse_logo.png" 
+import styles from "../styles/create_event.module.css" 
 import btnstyles from "../styles/button.module.css"
 import EventCode from '../lib/eventCode'
 import { BsImage } from "react-icons/bs"
@@ -27,31 +24,7 @@ const myBucket = new AWS.S3({
     region: REGION,
 })
 
-export async function getServerSideProps(context) {
-  try {
-    await clientPromise
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // const client = await clientPromise
-    // const db = client.db("myDatabase")
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-    // db.find({})
-    return {
-      props: { isConnected: true },
-    }
-  } catch (e) {
-    console.error(e)
-    return {
-      props: { isConnected: false },
-    }
-  }
-}
-
-
-export default function Events({isConnected, setshowCreateEvent, project, setLoggedIn, setCanAccess}) {
+export default function Events({setshowCreateEvent, project, setLoggedIn, setCanAccess}) {
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
