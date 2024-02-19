@@ -1,6 +1,7 @@
 import Head from "next/head";
 import DensityGraphViewHeatmap from "../components/DensityGraphViewHeatmap";
 import styles from "../styles/heatmap.module.css";
+import { useState, useEffect, useRef } from "react";
 import btnstyles from "../styles/button.module.css";
 import { jsPDF } from "jspdf";
 import InstanceSelection from "../components/InstanceSelection";
