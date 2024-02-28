@@ -82,9 +82,8 @@ export default function View_Project() {
   };
 
   const convertDate = (event) => {
-    let date = event.date;
-    console.log(date);
-    let months = [
+    const date = event.date;
+    const months = [
       "January",
       "February",
       "March",
@@ -98,17 +97,14 @@ export default function View_Project() {
       "November",
       "December",
     ];
+
     if (!date || date.length == 0) return "";
-    return (
-      months[parseInt(date.substring(5, 7)) - 1] +
-      " " +
-      parseInt(date.substring(8, 10)).toString() +
-      ", " +
-      date.substring(0, 4)
-    );
+    return `${months[parseInt(date.substring(5, 7)) - 1]} ${parseInt(
+      date.substring(8, 10)
+    ).toString()}, ${date.substring(0, 4)}`;
   };
 
-  let updatedList = eventInfo
+  const updatedList = eventInfo
     .slice(startIndex == -1 ? 0 : startIndex, startIndex + 3)
     .map((event) => {
       console.log(event);
@@ -120,7 +116,6 @@ export default function View_Project() {
               <p>{truncate(event.title, 28)}</p>
             </div>
             <div className={pstyles.eventInfo}>
-              {/* {  const start = new Date().toLocaleDateString(event);} */}
               {<RiCalendar2Fill />} {event ? convertDate(event) : "undefined"}
               <br></br> <br></br>
               {<MdLocationOn />}
@@ -131,9 +126,7 @@ export default function View_Project() {
       );
     });
 
-  //const [headerImage, setHeaderImage] = useState();
-
-  var id;
+  let id = null;
   if (typeof window !== "undefined") {
     const queryParameters = new URLSearchParams(window.location.search);
     id = queryParameters.get("id");
@@ -142,7 +135,7 @@ export default function View_Project() {
   const putToDatabase = async () => {
     let currentBool = !current;
     setCurrent(!current);
-    const response = await fetch(`/api/view_project/${id}`, {
+    await fetch(`/api/view_project/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -162,7 +155,7 @@ export default function View_Project() {
 
   useEffect(() => {
     if (!dataFetched) {
-      const response = fetch(`/api/view_project/${id}`, {
+      fetch(`/api/view_project/${id}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -171,7 +164,7 @@ export default function View_Project() {
         method: "GET",
       })
         .then((data) => data.json())
-        .then((r) => {
+        .then(async (r) => {
           setLoggedIn(r.loggedIn);
           setCanAccess(r.access);
           if (r.loggedIn && r.access) {
@@ -180,7 +173,7 @@ export default function View_Project() {
               setCurrent(r.projects[0].current);
               setName(r.projects[0].name);
               setDescription(r.projects[0].description);
-              const event_response = fetch(`/api/view_project_events/${id}`, {
+              await fetch(`/api/view_project_events/${id}`, {
                 headers: {
                   Accept: "application/json",
                   "Content-Type": "application/json",
@@ -190,10 +183,7 @@ export default function View_Project() {
               })
                 .then((data) => data.json())
                 .then((r) => {
-                  if (!dataFetched) {
-                    setEventInfo(r);
-                    setDataFetched(true);
-                  }
+                  setEventInfo(r);
                 });
             }
           }
@@ -202,20 +192,18 @@ export default function View_Project() {
     }
   }, [router, eventInfo]);
 
+  if (!dataFetched) {
+    return <LoadingPage />;
+  }
+
   if (!loggedIn) {
-    return <PleaseLogin></PleaseLogin>;
+    return <PleaseLogin />;
   }
 
   if (!canAccess) {
     return <NoAccess />;
   }
 
-  if (!dataFetched) {
-    return <LoadingPage></LoadingPage>;
-  }
-  //on the line with EditProject, you also have to pass in an id so that in the
-  // edit project page it can update the specific project in the database
-  console.log(projectInfo, eventInfo);
   return (
     <div className={pstyles.container}>
       <Head>
@@ -231,7 +219,7 @@ export default function View_Project() {
           />
         </div>
       )}
-      {showEditProject && (
+      {showEditProject && id && (
         <div className={pstyles.createEventPopup}>
           <EditProject
             setshowEditProject={setshowEditProject}
@@ -241,35 +229,18 @@ export default function View_Project() {
           />
         </div>
       )}
-      <BackgroundBottom2></BackgroundBottom2>
-      {/* <Image className={pstyles.tri}
-        src={"/projectTriangle.png"}
-        height={400}
-        width={400}
-        style={{ alignSelf: 'center' }}
-    />
-    <Image className={pstyles.hex}
-        src={"/projectHexagon.png"}
-        height={400}
-        width={200}
-        style={{ alignSelf: 'center' }}
-    /> */}
+      <BackgroundBottom2 />
       <div className={pstyles.border}>
         <div className={pstyles.title}>
           {" "}
-          <ObserveLogo></ObserveLogo>
+          <ObserveLogo />
         </div>
-        {/* <div className ={pstyles.wrapArrow}>
-        <div className={pstyles.arrow}> */}
         <div className={pstyles.crumbs}>
           <Crumbs
             crumbs={{ np: true }}
             ending={projectInfo[0] ? projectInfo[0]["name"] : ""}
           ></Crumbs>
         </div>
-        {/* </div>  
-         □ / <div className={pstyles.directoryName}>{projectInfo[0] ? projectInfo[0]["name"] : "undefined"}</div> 
-      </div>  */}
         <div className={pstyles.middle}>
           <div className={pstyles.pImage}>
             {projectInfo[0].imageUploaded ? (
@@ -359,7 +330,7 @@ export default function View_Project() {
             )}
 
             <div className={pstyles.eventsCon}>
-              {startIndex == -1 ? (
+              {startIndex == -1 && (
                 <div
                   className={pstyles.createEvent}
                   onClick={() => {
@@ -371,23 +342,17 @@ export default function View_Project() {
                   </div>
                   Create new event
                 </div>
-              ) : (
-                <></>
               )}
               {updatedList}
-              {eventInfo.length < 1 ? (
+              {eventInfo.length < 1 && (
                 <div className={pstyles.eventCon}>
                   <div className={pstyles.hiddenEvent}></div>
                 </div>
-              ) : (
-                <></>
               )}
-              {eventInfo.length < 2 ? (
+              {eventInfo.length < 2 && (
                 <div className={pstyles.eventCon}>
                   <div className={pstyles.hiddenEvent}></div>
                 </div>
-              ) : (
-                <></>
               )}
             </div>
             {startIndex < eventInfo.length - 3 ? (

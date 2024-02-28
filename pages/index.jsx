@@ -249,15 +249,6 @@ export default function Home() {
             <title>Home | Observe</title>
           </Head>
           <BackgroundBottom1 />
-          {/* <Image className={styles.circle}
-            src={"/homeCircle.png"}
-            height={160}
-            width={325}
-          />
-          <Image className={styles.pentagon}
-            src={"/homePentagon.png"}
-            width={418} height={336}
-          /> */}
           {showCreateProject && (
             <div className={styles.create_project}>
               <CreateProject

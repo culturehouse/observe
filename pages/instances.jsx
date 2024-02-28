@@ -34,9 +34,8 @@ const orderType = {
 
 export default function Instances() {
   const [orderBy, setOrderBy] = useState(orderType.dateTime);
-  const [orderedInstances, setOrderedInstances] = useState([]);
+  const [instances, setInstances] = useState([]);
   const [sortAscending, setSortAscending] = useState(true);
-  const [fetched, setFetched] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [canAccess, setCanAccess] = useState(false);
@@ -46,8 +45,20 @@ export default function Instances() {
   const router = useRouter();
   const { id } = router.query;
 
+  const setOrderedInstances = (instances) => {
+    const orderMult = sortAscending ? 1 : -1;
+    const copy = [...instances];
+    if (orderBy == orderType.temperature) {
+      setInstances(copy.sort((a, b) => orderMult * (a[orderBy] - b[orderBy])));
+    } else {
+      setInstances(
+        copy.sort((a, b) => orderMult * a[orderBy].localeCompare(b[orderBy]))
+      );
+    }
+  };
+
   useEffect(() => {
-    if (id && !fetched) {
+    if (id) {
       fetch(`/api/instances/${id}`, {
         headers: {
           Accept: "application/json",
@@ -62,26 +73,11 @@ export default function Instances() {
           setCanAccess(r.access);
           if (r.loggedIn && r.access) {
             setOrderedInstances(r.instances);
-            setFetched(true);
           }
           setLoading(false);
         });
     }
-
-    setOrderedInstances((orderedInstances) => {
-      const orderMult = sortAscending ? 1 : -1;
-      const copy = [...orderedInstances];
-      if (orderBy == orderType.temperature) {
-        return copy.sort((a, b) => {
-          return orderMult * (a[orderBy] - b[orderBy]);
-        });
-      } else {
-        return copy.sort((a, b) => {
-          return orderMult * a[orderBy].localeCompare(b[orderBy]);
-        });
-      }
-    });
-  }, [router, orderBy, sortAscending]);
+  }, [router]);
 
   const viewInstance = (id) => {
     if (deleting) return;
@@ -113,8 +109,8 @@ export default function Instances() {
       .then((data) => data.json())
       .then((r) => {
         if (r.success) {
-          setOrderedInstances((orderedInstances) =>
-            orderedInstances.filter((instance) => instance.id !== id)
+          setInstances((instances) =>
+            instances.filter((instance) => instance.id !== id)
           );
         } else {
           alert(r.message);
@@ -290,8 +286,8 @@ export default function Instances() {
             <div />
           </div>
           <div className={styles.rows}>
-            {orderedInstances.length > 0 ? (
-              orderedInstances.map((instance, i) => {
+            {instances.length > 0 ? (
+              instances.map((instance, i) => {
                 return (
                   <div
                     key={instance.id}

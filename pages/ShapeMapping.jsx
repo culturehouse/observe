@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { useState } from "react";
 import Crumbs from "../components/Crumbs";
-import { useRouter } from 'next/router'
-import styles from "../styles/create_instance.module.css"; 
+import { useRouter } from "next/router";
+import styles from "../styles/create_instance.module.css";
 import ObserveLogo from "../components/ObserveLogo";
-import PleaseLogin from '../components/PleaseLogin'
+import PleaseLogin from "../components/PleaseLogin";
 import Canvas from "../components/Canvas.jsx";
 import NoAccess from "../components/NoAccess";
-import BackgroundBottom4 from "../components/BackgroundBottom4"
+import BackgroundBottom4 from "../components/BackgroundBottom4";
 
 export default function Mapping() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -18,33 +18,34 @@ export default function Mapping() {
     return (
       <div className={styles.world}>
         <Head>
-          <title>
-            Create new stop and stay instance | Observe
-          </title>
+          <title>Create new stop and stay instance | Observe</title>
         </Head>
         <BackgroundBottom4></BackgroundBottom4>
         <div className={styles.border}>
           <ObserveLogo></ObserveLogo>
           <div>
-            <Crumbs crumbs={{
-              np: "",
-              event: { id: router.query.eventId, name: router.query.eventName },
-              proj: { id: router.query.projId, name: router.query.projName }
-            }}
-              ending={"Create instance"}>
-            </Crumbs>
+            <Crumbs
+              crumbs={{
+                np: "",
+                event: {
+                  id: router.query.eventId,
+                  name: router.query.eventName,
+                },
+                proj: { id: router.query.projId, name: router.query.projName },
+              }}
+              ending={"Create instance"}
+            ></Crumbs>
           </div>
           <div>
             <p className={styles.create}>Create new instance</p>
           </div>
-          <Canvas setLoggedIn={setLoggedIn} setCanAccess={setCanAccess}/>
+          <Canvas setLoggedIn={setLoggedIn} setCanAccess={setCanAccess} />
         </div>
       </div>
     );
   } else if (!loggedIn) {
-    return <PleaseLogin/>
+    return <PleaseLogin />;
   } else {
-    return <NoAccess/>
+    return <NoAccess />;
   }
-
 }
