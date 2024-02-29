@@ -11,7 +11,7 @@ import { BsCalendarEvent, BsChevronRight } from "react-icons/bs";
 import { MdLocationOn } from "react-icons/md";
 import { BiCopy } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
-import DropDownButton from "../components/CreateButton";
+import CreateButton from "../components/CreateButton";
 import Crumbs from "../components/Crumbs";
 import LoadingPage from "../components/LoadingPage";
 import PleaseLogin from "../components/PleaseLogin";
@@ -222,12 +222,12 @@ export default function View_Event() {
           </div>
           <div className={styles.createButton}>
             {eventInfo[0] ? (
-              <DropDownButton
+              <CreateButton
                 id={eventInfo[0]["id"]}
                 param={JSON.stringify(router.query)}
               />
             ) : (
-              <DropDownButton id="" />
+              <CreateButton id="" />
             )}
           </div>
         </div>
