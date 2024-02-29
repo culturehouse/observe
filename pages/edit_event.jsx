@@ -26,10 +26,10 @@ const myBucket = new AWS.S3({
 // function to post to database
 
 export default function Events({ setshowCreateEvent, eventInfo }) {
-  const [title, setTitle] = useState(eventInfo[0].title);
-  const [date, setDate] = useState(eventInfo[0].date);
-  const [location, setLocation] = useState(eventInfo[0].location);
-  const [notes, setNotes] = useState(eventInfo[0].notes);
+  const [title, setTitle] = useState(eventInfo[0]?.title ?? "");
+  const [date, setDate] = useState(eventInfo[0]?.date ?? "");
+  const [location, setLocation] = useState(eventInfo[0]?.location ?? "");
+  const [notes, setNotes] = useState(eventInfo[0]?.notes ?? "");
   const [sketchFile, setSketchFile] = useState(null);
   const [progress, setProgress] = useState(0);
   const [imageUploaded, setImageUploaded] = useState(false);
@@ -46,7 +46,10 @@ export default function Events({ setshowCreateEvent, eventInfo }) {
   );
 
   const postToDatabase = async () => {
-    fetch(`/api/update_event/${eventInfo[0].id}`, {
+    const id = eventInfo[0]?.id;
+    if (id === undefined) return;
+
+    fetch(`/api/update_event/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -67,11 +70,14 @@ export default function Events({ setshowCreateEvent, eventInfo }) {
   };
 
   const uploadFile = (file) => {
+    const id = eventInfo[0]?.id;
+    if (id === undefined) return;
+
     const params = {
       ACL: "public-read",
       Body: file,
       Bucket: S3_BUCKET,
-      Key: "events/" + eventInfo[0].id + ".png", // replace events with either events, heatmaps, or projects
+      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 
     return new Promise((resolve, reject) => {
@@ -153,13 +159,12 @@ export default function Events({ setshowCreateEvent, eventInfo }) {
             />
             <BsImage />
             <p>
-              {sketchFile != null ? sketchFile.name : eventInfo[0].id + ".jpg"}
+              {sketchFile != null ? sketchFile.name : `${eventInfo[0]?.id}.jpg`}
             </p>
           </label>
           <p
             className={styles.x}
             onClick={() => {
-              console.log("bruh");
               setSketchFile(null);
             }}
           >
