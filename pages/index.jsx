@@ -283,7 +283,6 @@ export default function Home() {
                 LOGOUT
               </p>
             </div>
-            {/* <button onClick={createProject}>Create New Project</button> */}
             <div className={styles.tabs}>
               {currTab == "Past" ? (
                 <p className={styles.activeTab} onClick={() => setTab("Past")}>
