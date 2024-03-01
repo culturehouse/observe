@@ -25,7 +25,7 @@ const myBucket = new AWS.S3({
 
 // function to post to database
 
-export default function Events({ setshowCreateEvent, eventInfo }) {
+export default function Events({ setshowCreateEvent, eventInfo = [] }) {
   const [title, setTitle] = useState(eventInfo[0]?.title ?? "");
   const [date, setDate] = useState(eventInfo[0]?.date ?? "");
   const [location, setLocation] = useState(eventInfo[0]?.location ?? "");
