@@ -1,24 +1,22 @@
-import React from 'react';
-import { useRef, useEffect, useState } from 'react';
-import axios from 'axios';
-import { BiUndo } from "react-icons/bi"
-import Dropdown from './Dropdown';
-import { useRouter } from 'next/router';
-import Image from 'next/image'
-
-import styles from '../styles/create_instance.module.css';
+import React from "react";
+import { useRef, useEffect, useState } from "react";
+import { BiUndo } from "react-icons/bi";
+import Dropdown from "./Dropdown";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import styles from "../styles/create_instance.module.css";
 
 const Canvas1 = (props) => {
   const canvasRef = useRef(null);
 
   const draw = (ctx) => {
-    ctx.fillStyle = '#DD3E3E';
+    ctx.fillStyle = "#DD3E3E";
     ctx.fillRect(20, 10, 60, 60);
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     //Our draw come here
     draw(context);
@@ -31,7 +29,7 @@ const Canvas2 = (props) => {
   const canvasRef = useRef(null);
 
   const draw = (ctx) => {
-    ctx.fillStyle = '#F8B319';
+    ctx.fillStyle = "#F8B319";
     ctx.beginPath();
     ctx.moveTo(50, 10);
     ctx.lineTo(85, 70);
@@ -41,7 +39,7 @@ const Canvas2 = (props) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     //Our draw come here
     draw(context);
@@ -55,14 +53,14 @@ const Canvas3 = (props) => {
 
   const draw = (ctx) => {
     const circle = new Path2D();
-    ctx.fillStyle = '#8DBE40';
+    ctx.fillStyle = "#8DBE40";
     circle.arc(50, 40, 35, 0, 2 * Math.PI);
     ctx.fill(circle);
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     //Our draw come here
     draw(context);
@@ -104,7 +102,6 @@ const CanvasMain = ({
         context.fill();
       }
     });
-
   };
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -113,7 +110,7 @@ const CanvasMain = ({
     drawCur();
   }, []);
 
-  useEffect(() => drawCur(), [snsDataArray])
+  useEffect(() => drawCur(), [snsDataArray]);
 
   const draw = async ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
@@ -146,7 +143,6 @@ const CanvasMain = ({
 
   const onBackPress = (event) => {
     if (snsDataArray.length != 0) {
-
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -158,33 +154,42 @@ const CanvasMain = ({
 
   return (
     <>
-      <div><span className={styles.undoSpan} onClick={onBackPress}><BiUndo /></span></div>
+      <div>
+        <span className={styles.undoSpan} onClick={onBackPress}>
+          <BiUndo />
+        </span>
+      </div>
       <div className={styles.canvasmain}>
-        <p className={styles.sketch}>Select mode and click on map to mark location</p>
+        <p className={styles.sketch}>
+          Select mode and click on map to mark location
+        </p>
         <canvas ref={canvasRef} onClick={draw} tabIndex="0" />
       </div>
     </>
   );
 };
 
-
 export default function Canvas({ setLoggedIn, eventId }) {
-  const [position, setposition] = useState('sitting');
+  const [position, setposition] = useState("sitting");
   const [snsDataArray, setsnsDataArray] = useState([]);
-  const [volunteerName, setVolunteerName] = useState('');
+  const [volunteerName, setVolunteerName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [weather, setWeather] = useState("");
   const [notes, setNotes] = useState("");
   const [temperature, setTemperature] = useState("");
-  const [clicked, setClicked] = useState({ sitting: true, standing: false, other: false })
+  const [clicked, setClicked] = useState({
+    sitting: true,
+    standing: false,
+    other: false,
+  });
   console.log(date);
   const [size, setSize] = useState(0);
-  const fahrenheitMargin = (temperature.length * 8 + 22) + 'px';
+  const fahrenheitMargin = temperature.length * 8 + 22 + "px";
 
   const router = useRouter();
 
-  const temperature_regex = new RegExp('^[0-9]*$');
+  const temperature_regex = new RegExp("^[0-9]*$");
 
   const weatherOptions = [
     { value: "Sunny", label: "Sunny" },
@@ -194,57 +199,65 @@ export default function Canvas({ setLoggedIn, eventId }) {
     { value: "Drizzle", label: "Drizzle" },
     { value: "Raining", label: "Raining" },
     { value: "Snowing", label: "Snowing" },
-  ]
+  ];
 
   const toSitting = () => {
-    setClicked({ sitting: true, standing: false, other: false })
-    setposition('sitting');
+    setClicked({ sitting: true, standing: false, other: false });
+    setposition("sitting");
   };
   const toStanding = () => {
-    setClicked({ sitting: false, standing: true, other: false })
-    setposition('standing');
+    setClicked({ sitting: false, standing: true, other: false });
+    setposition("standing");
   };
   const toOther = () => {
-    setClicked({ sitting: false, standing: false, other: true })
-    setposition('other');
+    setClicked({ sitting: false, standing: false, other: true });
+    setposition("other");
   };
 
   const onCanvasSubmit = () => {
     // TODO: Empty fields are allowed, something on the handle on server side
-    if (volunteerName == "" ||
+    if (
+      volunteerName == "" ||
       date == "" ||
       time == "" ||
       weather == "" ||
-      temperature == "") {
-      alert("Please make sure you fill out all necessary information before submission")
+      temperature == ""
+    ) {
+      alert(
+        "Please make sure you fill out all necessary information before submission"
+      );
       return;
     }
 
     if (!temperature_regex.test(temperature)) {
-      alert("Instance Creation Failed. Please make sure you are entering a number value for the temperature")
+      alert(
+        "Instance Creation Failed. Please make sure you are entering a number value for the temperature"
+      );
       return;
     }
 
-      const res = fetch(`/api/volunteerDataInput/${router.query.eventId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        method: 'GET',
-      }).then((data) => data.json()).then((r) => {
+    const res = fetch(`/api/volunteerDataInput/${router.query.eventId}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "GET",
+    })
+      .then((data) => data.json())
+      .then((r) => {
         if (r.valid == false) {
           alert(r.message);
-          router.push("/volunteer_login")
+          router.push("/volunteer_login");
           return;
         }
         const res2 = fetch("/api/volunteerDataInput/dataInput", {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             data: snsDataArray,
             dateTime: new Date(date),
@@ -256,44 +269,60 @@ export default function Canvas({ setLoggedIn, eventId }) {
             np_sub: r.event.np_sub,
             eventId: r.event.id,
           }),
-        }).then((ddata) => ddata.json()).then((t) => {
-          if (t.valid) {
-            console.log("Success");
-            router.push("/thank_you?eventId=" + eventId);
-          } else {
-            console.log("poo");
-          }
         })
-      })
-
-    };
-
+          .then((ddata) => ddata.json())
+          .then((t) => {
+            if (t.valid) {
+              console.log("Success");
+              router.push("/thank_you?eventId=" + eventId);
+            } else {
+              console.log("poo");
+            }
+          });
+      });
+  };
 
   return (
     <div className={styles.outer}>
       <div className={styles.content}>
         <div className={styles.leftContent}>
           <div className={styles.sidebar}>
-            <button className={clicked.sitting ? styles.drawbuttonClicked : styles.drawbutton} onClick={toSitting}>
+            <button
+              className={
+                clicked.sitting ? styles.drawbuttonClicked : styles.drawbutton
+              }
+              onClick={toSitting}
+            >
               <Canvas1 />
               <p className={styles.canvas}> Sitting</p>
             </button>
             <div className={styles.spacing_drawbutton}></div>
-            <button className={clicked.standing ? styles.drawbuttonClicked : styles.drawbutton} onClick={toStanding}>
+            <button
+              className={
+                clicked.standing ? styles.drawbuttonClicked : styles.drawbutton
+              }
+              onClick={toStanding}
+            >
               <Canvas2 />
               <p className={styles.canvas}> Standing</p>
             </button>
             <div className={styles.spacing_drawbutton}></div>
-            <button className={clicked.other ? styles.drawbuttonClicked : styles.drawbutton} onClick={toOther}>
+            <button
+              className={
+                clicked.other ? styles.drawbuttonClicked : styles.drawbutton
+              }
+              onClick={toOther}
+            >
               <Canvas3 />
               <p className={styles.canvas}> Other</p>
             </button>
           </div>
-          <Image className={styles.picture}
-              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${router.query.eventId}.png`}
-              height={559}
-              width={559}
-            />  
+          <Image
+            className={styles.picture}
+            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${router.query.eventId}.png`}
+            height={559}
+            width={559}
+          />
           <CanvasMain
             position={position}
             setsnsDataArray={setsnsDataArray}
@@ -337,29 +366,45 @@ export default function Canvas({ setLoggedIn, eventId }) {
           <div className={styles.dateTime}>
             <div className={styles.date}>
               <p className={styles.volunteer}>Temperature</p>
-              {temperature_regex.test(temperature) ?
+              {temperature_regex.test(temperature) ? (
                 <input
                   value={temperature}
                   onChange={(e) => setTemperature(e.target.value)}
                   className={styles.dateBox}
                   type="text"
                 ></input>
-                :
+              ) : (
                 <input
                   value={temperature}
                   onChange={(e) => setTemperature(e.target.value)}
                   className={styles.invaliddateBox}
                   type="text"
-                ></input>}
-              {temperature_regex.test(temperature) || temperature == ""?
-								<p className={styles.fahrenheit} style={{color: 'black', marginLeft: fahrenheitMargin}}>˚F</p>
-								:
-								<p className={styles.fahrenheit} style={{color: '#db0000', marginLeft: fahrenheitMargin}}>˚F</p>}
+                ></input>
+              )}
+              {temperature_regex.test(temperature) || temperature == "" ? (
+                <p
+                  className={styles.fahrenheit}
+                  style={{ color: "black", marginLeft: fahrenheitMargin }}
+                >
+                  ˚F
+                </p>
+              ) : (
+                <p
+                  className={styles.fahrenheit}
+                  style={{ color: "#db0000", marginLeft: fahrenheitMargin }}
+                >
+                  ˚F
+                </p>
+              )}
             </div>
             <div className={styles.dateSpacing}></div>
             <div className={styles.date}>
               <p className={styles.volunteer}>Weather</p>
-              <Dropdown placeHolder="Select..." options={weatherOptions} set={setWeather}></Dropdown>
+              <Dropdown
+                placeHolder="Select..."
+                options={weatherOptions}
+                set={setWeather}
+              ></Dropdown>
               {/* <input
 							value={weather}
 							onChange={(e) => setWeather(e.target.value)}
@@ -385,5 +430,4 @@ export default function Canvas({ setLoggedIn, eventId }) {
       </div>
     </div>
   );
-
 }
