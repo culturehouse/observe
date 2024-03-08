@@ -12,9 +12,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.5.0",
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@nextui-org/react": "^1.0.0-beta.12",
-    "@prisma/client": "^5.9.1",
+    "@prisma/client": "^5.10.0",
     "auth0-js": "^9.24.0",
     "aws-sdk": "^2.1368.0",
     "cookies": "^0.8.0",
