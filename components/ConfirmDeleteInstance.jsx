@@ -2,7 +2,7 @@ import { FiX } from "react-icons/fi";
 import styles from "../styles/create_event.module.css";
 import btnstyles from "../styles/button.module.css";
 
-export default function Projects({
+export default function ConfirmDeleteInstance({
   setIsOpen = () => {},
   handleConfirm = () => {},
 }) {

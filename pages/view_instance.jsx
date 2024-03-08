@@ -16,7 +16,7 @@ import BackgroundBottom1 from "../components/BackgroundBottom1"
 //   };
 // }
 
-export default function View_Event() {
+export default function View_Instance() {
   const [instance, setInstance] = useState([{"title": "Loading..."}]);
   const [dataFetched, setDataFetched] = useState(false);
 
