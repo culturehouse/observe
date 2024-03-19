@@ -35,39 +35,41 @@ export default function View_Event() {
   const { id } = router.query;
 
   useEffect(() => {
-    fetch(`/api/view_event/${id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "GET",
-    })
-      .then((data) => data.json())
-      .then(async (r) => {
-        setLoggedIn(r.loggedIn);
-        setCanAccess(r.access);
-        if (r.loggedIn && r.access) {
-          setEventInfo(r.events);
-          setCoverImageURL(
-            `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${id}.png`
-          );
-          await fetch(`/api/view_event_heatmaps/${id}`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            method: "GET",
-          })
-            .then((data) => data.json())
-            .then((res) => {
-              setHeatmaps(res);
-            });
-        }
-        setDataFetched(true);
-      });
-  }, [router]);
+    if (id) {
+      fetch(`/api/view_event/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "GET",
+      })
+        .then((data) => data.json())
+        .then(async (r) => {
+          setLoggedIn(r.loggedIn);
+          setCanAccess(r.access);
+          if (r.loggedIn && r.access) {
+            setEventInfo(r.events);
+            setCoverImageURL(
+              `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${id}.png`
+            );
+            await fetch(`/api/view_event_heatmaps/${id}`, {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              method: "GET",
+            })
+              .then((data) => data.json())
+              .then((res) => {
+                setHeatmaps(res);
+              });
+          }
+          setDataFetched(true);
+        });
+    }
+  }, [id]);
 
   const convertDate = (heatmap) => {
     const date = heatmap.dateCreated;
@@ -255,10 +257,10 @@ export default function View_Event() {
             <div className={styles.invisible} />
           )}
           {heatmaps.map(function (heatmap, i) {
-            console.log("heyo");
             if (i >= 3 + firstHeatmapIndex || i < 0 + firstHeatmapIndex) return;
             return (
               <Link
+                key={heatmap.id}
                 href={`/heatmap?id=${heatmap.id}&eventId=${
                   eventInfo[0] ? eventInfo[0]["id"] : ""
                 }&eventName=${

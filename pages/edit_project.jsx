@@ -36,6 +36,8 @@ export default function Projects({
   const [imageUploaded, setImageUploaded] = useState(false);
 
   const postToDatabase = async () => {
+    if (!id) return;
+
     await fetch(`/api/edit_project/${id}`, {
       headers: {
         Accept: "application/json",
@@ -88,25 +90,27 @@ export default function Projects({
   };
 
   useEffect(() => {
-    fetch(`/api/view_project/${id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "GET",
-    })
-      .then((data) => data.json())
-      .then((r) => {
-        setLoggedIn(r.loggedIn);
-        setCanAccess(r.access);
-        setProjectInfo(r.projects);
-        setName(r.projects[0].name);
-        setDescription(r.projects[0].description);
-        setDataFetched(true);
-        setImageUploaded(r.projects[0].imageUploaded);
-      });
-  }, []);
+    if (id) {
+      fetch(`/api/view_project/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "GET",
+      })
+        .then((data) => data.json())
+        .then((r) => {
+          setLoggedIn(r.loggedIn);
+          setCanAccess(r.access);
+          setProjectInfo(r.projects);
+          setName(r.projects[0].name);
+          setDescription(r.projects[0].description);
+          setDataFetched(true);
+          setImageUploaded(r.projects[0].imageUploaded);
+        });
+    }
+  }, [id]);
 
   return (
     <div className={styles.dimmer}>

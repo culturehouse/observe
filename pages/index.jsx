@@ -59,7 +59,7 @@ export default function Home() {
 
   const setCookies = (accessToken) => {
     if (!dataFetched) {
-      const response = fetch(`/api/home/${accessToken}`, {
+      fetch(`/api/home/${accessToken}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -78,17 +78,14 @@ export default function Home() {
             setCanAccess(r.dataFetched);
           }
           if (r.non_profit) {
-            const event_response = fetch(
-              `/api/nonprofit_events/${r.non_profit[0].id}`,
-              {
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                  "Access-Control-Allow-Origin": "*",
-                },
-                method: "GET",
-              }
-            )
+            fetch(`/api/nonprofit_events/${r.non_profit[0].id}`, {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              method: "GET",
+            })
               .then((data) => data.json())
               .then((res) => {
                 setEvents(res);
@@ -99,7 +96,7 @@ export default function Home() {
   };
 
   const getPermission = () => {
-    const response = fetch(`api/home/accessProjects`, {
+    fetch(`api/home/accessProjects`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -118,17 +115,14 @@ export default function Home() {
           setCanAccess(r.dataFetched);
         }
         if (r.non_profit) {
-          const event_response = fetch(
-            `/api/nonprofit_events/${r.non_profit[0].id}`,
-            {
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-              method: "GET",
-            }
-          )
+          fetch(`/api/nonprofit_events/${r.non_profit[0].id}`, {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            method: "GET",
+          })
             .then((data) => data.json())
             .then((res) => {
               setEvents(res);
@@ -200,7 +194,7 @@ export default function Home() {
         getPermission();
       }
     }
-  }, [router]);
+  }, [hashArr]);
 
   const createProject = () => {
     const res = fetch("/api/home/createProject", {
@@ -332,6 +326,7 @@ export default function Home() {
                 )
                   return (
                     <Link
+                      key={proj.id}
                       href={`/view_project?id=${proj.id}`}
                       className={styles.projectInfoLink}
                     >

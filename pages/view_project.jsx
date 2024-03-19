@@ -42,7 +42,9 @@ export default function View_Project() {
   const [startIndex, setStartIndex] = useState(-1);
   const [loggedIn, setLoggedIn] = useState(true);
   const [canAccess, setCanAccess] = useState(true);
+
   const router = useRouter();
+  const { id } = router.query;
 
   function truncate(str, n) {
     return str.length > n ? str.slice(0, n - 1) + "..." : str;
@@ -53,7 +55,6 @@ export default function View_Project() {
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
   let currentDate = `${month}/${day}/${year}`;
-  console.log(router.query);
 
   let cdate;
   let parsedDate;
@@ -110,7 +111,11 @@ export default function View_Project() {
       console.log(event);
       console.log(startIndex);
       return (
-        <div className={pstyles.eventCon} onClick={() => goToEvent(event)}>
+        <div
+          key={event.id}
+          className={pstyles.eventCon}
+          onClick={() => goToEvent(event)}
+        >
           <div className={pstyles.event}>
             <div className={pstyles.eventName}>
               <p>{truncate(event.title, 28)}</p>
@@ -126,15 +131,11 @@ export default function View_Project() {
       );
     });
 
-  let id = null;
-  if (typeof window !== "undefined") {
-    const queryParameters = new URLSearchParams(window.location.search);
-    id = queryParameters.get("id");
-  }
-
   const putToDatabase = async () => {
+    if (!id) return;
     let currentBool = !current;
     setCurrent(!current);
+
     await fetch(`/api/view_project/${id}`, {
       headers: {
         Accept: "application/json",
@@ -154,7 +155,7 @@ export default function View_Project() {
   };
 
   useEffect(() => {
-    if (!dataFetched) {
+    if (!dataFetched && id) {
       fetch(`/api/view_project/${id}`, {
         headers: {
           Accept: "application/json",
@@ -190,7 +191,7 @@ export default function View_Project() {
           setDataFetched(true);
         });
     }
-  }, [router, eventInfo]);
+  }, [id]);
 
   if (!dataFetched) {
     return <LoadingPage />;

@@ -25,11 +25,8 @@ export default function Heatmap() {
   console.log("testing change, hopefully fixes prod");
 
   const router = useRouter();
-  var id;
-  if (typeof window !== "undefined") {
-    const queryParameters = new URLSearchParams(window.location.search);
-    id = queryParameters.get("id");
-  }
+  const { id } = router.query;
+
   const [dataTypeFilter, setDataTypeFilter] = useState([
     "sitting",
     "standing",
@@ -60,7 +57,9 @@ export default function Heatmap() {
     return finalDate + finalHour;
   };
 
-  const postToDatabase = () => {
+  const postToDatabase = async () => {
+    if (!id) return;
+
     let newHeatmapData = filteredInstances
       .filter((instance) => selectedSet.has(instance.id))
       .reduce((accumulator, instance) => accumulator.concat(instance.data), []);
@@ -73,7 +72,7 @@ export default function Heatmap() {
     }
     console.log(newHeatmapData);
 
-    const _ = fetch(`/api/heatmap/${id}`, {
+    await fetch(`/api/heatmap/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -92,8 +91,10 @@ export default function Heatmap() {
     window.location.reload(false);
   };
 
-  const postSmallEdit = () => {
-    const _ = fetch(`/api/heatmap/heatmap_s/${id}`, {
+  const postSmallEdit = async () => {
+    if (!id) return;
+
+    await fetch(`/api/heatmap/heatmap_s/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -109,66 +110,68 @@ export default function Heatmap() {
   };
 
   useEffect(() => {
-    fetch(`api/heatmap/${id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "GET",
-    })
-      .then((data) => data.json())
-      .then((r) => {
-        setLoggedIn(r.loggedIn);
-        setCanAccess(r.access);
-        if (r.loggedIn && r.access) {
-          setHeatmapInfo(r.aggregateSNS);
-          if (r.aggregateSNS) {
-            setHmap(r.aggregateSNS.data);
-            console.log("OUR DATA");
-            console.log(hmap);
-            setNotes(r.aggregateSNS.notes);
-            setBackgroundLink(
-              `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${
-                r.aggregateSNS.eventId
-              }.png?cache_bust=${Math.floor(Math.random() * 100)}`
+    if (id) {
+      fetch(`api/heatmap/${id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "GET",
+      })
+        .then((data) => data.json())
+        .then(async (r) => {
+          setLoggedIn(r.loggedIn);
+          setCanAccess(r.access);
+          if (r.loggedIn && r.access) {
+            setHeatmapInfo(r.aggregateSNS);
+            if (r.aggregateSNS) {
+              setHmap(r.aggregateSNS.data);
+              console.log("OUR DATA");
+              console.log(hmap);
+              setNotes(r.aggregateSNS.notes);
+              setBackgroundLink(
+                `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${
+                  r.aggregateSNS.eventId
+                }.png?cache_bust=${Math.floor(Math.random() * 100)}`
+              );
+            }
+            await fetch(`api/instances/${r.aggregateSNS.eventId}`, {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              method: "GET",
+            })
+              .then((data) => data.json())
+              .then((r) => {
+                setAggregateDataInstances(r.instances);
+                setFilteredInstances(r.instances);
+                console.log("Data Instances");
+                console.log(aggregateDataInstances);
+              });
+          }
+          console.log("Current Situation");
+          console.log(filteredInstances);
+          console.log(selectedSet);
+          let newHeatmapData = filteredInstances
+            .filter((instance) => selectedSet.has(instance.id))
+            .reduce(
+              (accumulator, instance) => accumulator.concat(instance.data),
+              []
+            );
+          if (dataTypeFilter.length !== 0) {
+            newHeatmapData = newHeatmapData.filter((data) =>
+              dataTypeFilter.includes(data.position)
             );
           }
-          fetch(`api/instances/${r.aggregateSNS.eventId}`, {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            method: "GET",
-          })
-            .then((data) => data.json())
-            .then((r) => {
-              setAggregateDataInstances(r.instances);
-              setFilteredInstances(r.instances);
-              console.log("Data Instances");
-              console.log(aggregateDataInstances);
-            });
-        }
-        console.log("Current Situation");
-        console.log(filteredInstances);
-        console.log(selectedSet);
-        let newHeatmapData = filteredInstances
-          .filter((instance) => selectedSet.has(instance.id))
-          .reduce(
-            (accumulator, instance) => accumulator.concat(instance.data),
-            []
-          );
-        if (dataTypeFilter.length !== 0) {
-          newHeatmapData = newHeatmapData.filter((data) =>
-            dataTypeFilter.includes(data.position)
-          );
-        }
-        console.log(newHeatmapData);
-        setHeatmapData(newHeatmapData);
-        setLoading(false);
-      });
-  }, [router]);
+          console.log(newHeatmapData);
+          setHeatmapData(newHeatmapData);
+          setLoading(false);
+        });
+    }
+  }, [id]);
 
   const svgWrapperRef = useRef(null);
 

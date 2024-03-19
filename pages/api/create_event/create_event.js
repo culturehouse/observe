@@ -1,4 +1,3 @@
-import EventCode from '../../../lib/eventCode';
 import prisma from '/helpers/prisma'
 import permission from '../permission';
 

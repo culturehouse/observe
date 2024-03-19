@@ -263,7 +263,7 @@ export default function Canvas({ setLoggedIn, instance }) {
             value={volunteerName}
             className={styles.volbox}
             type="text"
-            readonly
+            readOnly
             disabled
           ></input>
           <div className={styles.inputFieldsSpacing}></div>
@@ -274,7 +274,7 @@ export default function Canvas({ setLoggedIn, instance }) {
                 value={date}
                 className={styles.dateBox}
                 type="date"
-                readonly
+                readOnly
                 disabled
               ></input>
             </div>
@@ -285,7 +285,7 @@ export default function Canvas({ setLoggedIn, instance }) {
                 value={time}
                 className={styles.dateBox}
                 type="time"
-                readonly
+                readOnly
                 disabled
               ></input>
             </div>
@@ -298,7 +298,7 @@ export default function Canvas({ setLoggedIn, instance }) {
                 value={temperature + "˚F"}
                 className={styles.dateBox}
                 type="text"
-                readonly
+                readOnly
                 disabled
               ></input>
             </div>
@@ -310,7 +310,7 @@ export default function Canvas({ setLoggedIn, instance }) {
                 value={weather}
                 className={styles.dateBox}
                 type="text"
-                readonly
+                readOnly
                 disabled
               ></input>
             </div>

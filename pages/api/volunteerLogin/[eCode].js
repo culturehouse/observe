@@ -1,44 +1,43 @@
-import prisma from '/helpers/prisma';
+import prisma from "/helpers/prisma";
 
 export default async function accessEvent(req, res) {
-    // checks if the request method is a GET
-    if (req.method !== 'GET') {
-        res.status(405).send({ message: 'Only GET requests allowed' });
-        return;
-    } 
-    
-    let eCode = req.query.eCode;
+  // checks if the request method is a GET
+  if (req.method !== "GET") {
+    res.status(405).send({ message: "Only GET requests allowed" });
+    return;
+  }
 
-    try {
-        // query the db through prisma, storing result in events variable
-        const events = await prisma.Events.findMany({
-                where: {
-                    eCode: eCode,
-                },
-                take: 1,
-        });
+  let eCode = req.query.eCode;
 
-        if (events.length != 0) {
-            // const router = useRouter();
-            // router.push({ 
-            //     pathname: '/second/[eCode]]',
-            //     query: { eCode: eCode },
-            // });
-            var Cookies = require('cookies')
-            var cookies = new Cookies(req, res)        
+  try {
+    // query the db through prisma, storing result in events variable
+    const events = await prisma.Events.findMany({
+      where: {
+        eCode: eCode,
+      },
+      take: 1,
+    });
 
-            cookies.set('eCode', eCode, {maxAge: 7200000, overwrite: true})
-            res.status(200).json({valid: true, message: "Correct Code", eventId: events[0].id});
+    if (events.length != 0) {
+      // const router = useRouter();
+      // router.push({
+      //     pathname: '/second/[eCode]]',
+      //     query: { eCode: eCode },
+      // });
+      var Cookies = require("cookies");
+      var cookies = new Cookies(req, res);
 
-        } else {
-             res.status(200).json({valid: false, message: "Incorrect Code"});
-        }
-       
-    } catch (e) { // catch error if thrown during prisma query
-        // send error message as error response (500 is the status code 
-        // referring to an internal server error)
-        res.status(500).send({ message: e.message });
+      cookies.set("eCode", eCode, { maxAge: 7200000, overwrite: true });
+      res
+        .status(200)
+        .json({ valid: true, message: "Correct Code", eventId: events[0].id });
+    } else {
+      res.status(200).json({ valid: false, message: "Incorrect Code" });
     }
-
-    
+  } catch (e) {
+    // catch error if thrown during prisma query
+    // send error message as error response (500 is the status code
+    // referring to an internal server error)
+    res.status(500).send({ message: e.message });
+  }
 }

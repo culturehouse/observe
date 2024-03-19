@@ -77,7 +77,7 @@ export default function Instances() {
           setLoading(false);
         });
     }
-  }, [router]);
+  }, [id]);
 
   const viewInstance = (id) => {
     if (deleting) return;
@@ -96,8 +96,9 @@ export default function Instances() {
   };
 
   const removeInstance = (id) => {
-    if (deleting) return;
+    if (deleting || !id) return;
     setDeleting(true);
+
     fetch(`/api/instances/delete_instance/${id}`, {
       headers: {
         Accept: "application/json",
@@ -287,7 +288,7 @@ export default function Instances() {
           </div>
           <div className={styles.rows}>
             {instances.length > 0 ? (
-              instances.map((instance, i) => {
+              instances.map((instance) => {
                 return (
                   <div
                     key={instance.id}
