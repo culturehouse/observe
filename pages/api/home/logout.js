@@ -5,7 +5,7 @@ export default async function home(req, res) {
     return;
   }
 
-  res.setHeader("Set-Cookie", "aToken=; Path=/; HttpOnly; Max-Age=0");
+  res.setHeader("Set-Cookie", "aToken=; Path=/; HttpOnly");
 
   res.status(200).send({ message: "Logged out" });
 }
