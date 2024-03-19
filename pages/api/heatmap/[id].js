@@ -3,9 +3,8 @@ import permission from "../permission";
 
 export default async function heatmap(req, res) {
   if (req.method == "GET") {
-    var Cookies = require("cookies");
-    var cookies = new Cookies(req, res);
-    const token = cookies.get("aToken");
+    const token = req.cookies.aToken;
+
     if (!token) {
       res
         .status(200)

@@ -26,37 +26,35 @@ export default function Crumbs({ crumbs, ending }) {
 
   const updatedList = cookieList.map((cookie) => {
     return (
-      <>
-        &nbsp;/{" "}
+      <span key={cookie.path.split("?")[0]}>
+        {" / "}
         <a className={styles.crumbLink} href={cookie.path}>
           {cookie.name}
         </a>
-      </>
+      </span>
     );
   });
 
   return (
-    <>
-      <div className={styles.crumbs}>
-        <a
-          className={styles.backButton}
-          href={
-            cookieList.length === 0
-              ? "/"
-              : cookieList[cookieList.length - 1].path
-          }
-        >
-          {" "}
-          <BsArrowLeftShort />
-        </a>
-        <a className={styles.crumbLink} href="/">
-          {" "}
-          <RiHome2Line />{" "}
-        </a>
-        {updatedList}
-        {" / "}
-        <span className={styles.crumbEnding}>{ending}</span>
-      </div>
-    </>
+    <div className={styles.crumbs}>
+      <a
+        key="back-button"
+        className={styles.backButton}
+        href={
+          cookieList.length === 0 ? "/" : cookieList[cookieList.length - 1].path
+        }
+      >
+        <BsArrowLeftShort />
+      </a>
+      <a key="home" className={styles.crumbLink} href="/">
+        {" "}
+        <RiHome2Line />{" "}
+      </a>
+      {updatedList}
+      {" / "}
+      <span key={ending} className={styles.crumbEnding}>
+        {ending}
+      </span>
+    </div>
   );
 }

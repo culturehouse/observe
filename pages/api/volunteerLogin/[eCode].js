@@ -24,10 +24,12 @@ export default async function accessEvent(req, res) {
       //     pathname: '/second/[eCode]]',
       //     query: { eCode: eCode },
       // });
-      var Cookies = require("cookies");
-      var cookies = new Cookies(req, res);
 
-      cookies.set("eCode", eCode, { maxAge: 7200000, overwrite: true });
+      res.setHeader(
+        "Set-Cookie",
+        `eCode=${eCode}; Path=/; HttpOnly; Max-Age=7200000`
+      );
+
       res
         .status(200)
         .json({ valid: true, message: "Correct Code", eventId: events[0].id });

@@ -356,6 +356,7 @@ export default function Home() {
                                 eventsDisplayed++;
                                 return (
                                   <Link
+                                    key={event.id}
                                     href={`/view_event?id=${event.id}&projName=${proj.name}&projId=${proj.id}`}
                                     className={styles.link}
                                   >

@@ -9,12 +9,13 @@ export default async function home(req, res) {
   }
 
   const accessToken = req.query.accessToken;
-  var Cookies = require("cookies");
-
-  var cookies = new Cookies(req, res);
   let response = await permission(req, res, accessToken);
 
-  cookies.set("aToken", accessToken, { maxAge: 86390000, overwrite: true });
+  res.setHeader(
+    "Set-Cookie",
+    `aToken=${accessToken}; Path=/; HttpOnly; Max-Age=86390000`
+  );
+
   try {
     // query the db through prisma, storing result in events variable
     const non_profit = await prisma.NonProfits.findMany({

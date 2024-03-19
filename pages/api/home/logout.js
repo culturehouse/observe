@@ -1,6 +1,3 @@
-import prisma from "/helpers/prisma";
-import permission from "../permission";
-
 export default async function home(req, res) {
   // checks if the request method is a GET
   if (req.method !== "GET") {
@@ -8,11 +5,7 @@ export default async function home(req, res) {
     return;
   }
 
-  const accessToken = req.query.accessToken;
-  var Cookies = require("cookies");
+  res.setHeader("Set-Cookie", "aToken=; Path=/; HttpOnly; Max-Age=0");
 
-  var cookies = new Cookies(req, res);
-
-  cookies.set("aToken", null, { overwrite: true });
   res.status(200).send({ message: "Logged out" });
 }
