@@ -154,7 +154,6 @@ export default function Instances() {
           <div className={styles.back}>
             <Crumbs
               crumbs={{
-                np: "",
                 event: {
                   id: router.query.eventId,
                   name: router.query.eventName,

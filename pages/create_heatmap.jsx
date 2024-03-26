@@ -155,7 +155,6 @@ export default function Home() {
           <div className={other_styles.directory}>
             <Crumbs
               crumbs={{
-                np: "",
                 event: {
                   id: router.query.eventId,
                   name: router.query.eventName,

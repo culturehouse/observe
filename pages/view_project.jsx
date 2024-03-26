@@ -238,7 +238,7 @@ export default function View_Project() {
         </div>
         <div className={pstyles.crumbs}>
           <Crumbs
-            crumbs={{ np: true }}
+            crumbs={{}}
             ending={projectInfo[0] ? projectInfo[0]["name"] : ""}
           ></Crumbs>
         </div>

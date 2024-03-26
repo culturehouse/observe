@@ -349,7 +349,6 @@ export default function Heatmap() {
         <div className={styles.directory}>
           <Crumbs
             crumbs={{
-              np: "",
               event: { id: router.query.eventId, name: router.query.eventName },
               proj: { id: router.query.projId, name: router.query.projName },
             }}

@@ -8,18 +8,12 @@ export default function Crumbs({ crumbs, ending }) {
   if (crumbs.proj) {
     cookieList.push({
       name: crumbs.proj.name,
-      path: "/view_project?id=" + crumbs.proj.id,
+      path: `/view_project?id=${crumbs.proj.id}`,
     });
     if (crumbs.event) {
       cookieList.push({
         name: crumbs.event.name,
-        path:
-          "/view_event?id=" +
-          crumbs.event.id +
-          "&projId=" +
-          crumbs.proj.id +
-          "&projName=" +
-          crumbs.proj.name,
+        path: `/view_event?id=${crumbs.event.id}&projId=${crumbs.proj.id}&projName=${crumbs.proj.name}`,
       });
     }
   }

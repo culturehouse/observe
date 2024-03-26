@@ -26,7 +26,6 @@ export default function Mapping() {
           <div>
             <Crumbs
               crumbs={{
-                np: "",
                 event: {
                   id: router.query.eventId,
                   name: router.query.eventName,

@@ -127,14 +127,12 @@ export default function View_Event() {
             crumbs={{
               proj: { name: router.query.projName, id: router.query.projId },
             }}
-            ending={eventInfo[0] ? eventInfo[0]["title"] : ""}
+            ending={eventInfo[0]?.title ?? ""}
           ></Crumbs>
         </div>
         <div className={styles.header}>
           <div className={styles.title}>
-            <h1 className={styles.maintitle}>
-              {eventInfo[0] ? eventInfo[0]["title"] : "undefined"}
-            </h1>
+            <h1 className={styles.maintitle}>{eventInfo[0]?.title}</h1>
           </div>
           <div className={styles.rightHeader}>
             <div className={styles.eventCode}>
@@ -176,24 +174,18 @@ export default function View_Event() {
             <div className={styles.eventInformRow}>
               <div className={styles.eventInfo}>
                 <BsCalendarEvent />
-                <p className={styles.text}>
-                  {eventInfo[0] ? eventInfo[0]["date"] : "undefined"}
-                </p>
+                <p className={styles.text}>{eventInfo[0]?.date}</p>
               </div>
             </div>
             <div className={styles.eventInformRow}>
               <div className={styles.eventInfo}>
                 <MdLocationOn />
-                <p className={styles.text}>
-                  {eventInfo[0] ? eventInfo[0]["location"] : "undefined"}
-                </p>
+                <p className={styles.text}>{eventInfo[0]?.location}</p>
               </div>
             </div>
           </div>
           <div className={styles.noteSide}>
-            <p className={styles.noteText}>
-              {eventInfo[0] ? eventInfo[0]["notes"] : "undefined"}
-            </p>
+            <p className={styles.noteText}>{eventInfo[0]?.notes}</p>
           </div>
         </div>
         <div className={styles.activityMappingContainer}>
@@ -225,8 +217,11 @@ export default function View_Event() {
           <div className={styles.createButton}>
             {eventInfo[0] ? (
               <DropDownButton
-                id={eventInfo[0]["id"]}
-                param={JSON.stringify(router.query)}
+                id={id}
+                param={JSON.stringify({
+                  ...router.query,
+                  eventName: eventInfo[0]?.title,
+                })}
               />
             ) : (
               <DropDownButton id="" />

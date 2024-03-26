@@ -60,7 +60,6 @@ export default function View_Instance() {
             }}
             ending={"View instance"}
           ></Crumbs>
-          {/* <Crumbs crumbs={{ proj: { name: router.query.projName, id: router.query.projId }, event: {name: router.query.eventName, id: router.query.eventId} }} ending={instance[0] ? instance[0]["id"] : ""}></Crumbs> */}
         </div>
         <div className={styles.title}>
           <h1 className={styles.maintitle}>View instance</h1>
