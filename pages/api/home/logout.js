@@ -1,7 +1,7 @@
 export default async function home(req, res) {
-  // checks if the request method is a GET
-  if (req.method !== "GET") {
-    res.status(405).send({ message: "Only GET requests allowed" });
+  // checks if the request method is a POST
+  if (req.method !== "POST") {
+    res.status(405).send({ message: "Only POST requests allowed" });
     return;
   }
 

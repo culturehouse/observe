@@ -224,7 +224,7 @@ export default function Home() {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      method: "GET",
+      method: "POST",
     }).then((data) => {
       router.push("/login");
     });
