@@ -13,7 +13,7 @@ export default async function home(req, res) {
 
   res.setHeader(
     "Set-Cookie",
-    `aToken=${accessToken}; Path=/; HttpOnly; Max-Age=86400`
+    `aToken=${accessToken}; Path=/; HttpOnly; Secure; Max-Age=86400`
   );
 
   try {

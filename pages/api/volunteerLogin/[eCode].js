@@ -27,7 +27,7 @@ export default async function accessEvent(req, res) {
 
       res.setHeader(
         "Set-Cookie",
-        `eCode=${eCode}; Path=/; HttpOnly; Max-Age=7200000`
+        `eCode=${eCode}; Path=/; HttpOnly; Secure; Max-Age=7200000`
       );
 
       res
