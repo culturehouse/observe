@@ -17,7 +17,6 @@
     "@prisma/client": "^5.10.0",
     "auth0-js": "^9.24.0",
     "aws-sdk": "^2.1368.0",
-    "cookies": "^0.8.0",
     "d3": "^7.8.4",
     "eslint-config-next": "^14.1.0",
     "jsonwebtoken": "^9.0.0",

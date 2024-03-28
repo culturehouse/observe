@@ -5,10 +5,7 @@ export default async function home(req, res) {
     return;
   }
 
-  res.setHeader(
-    "Set-Cookie",
-    `aToken=deleted; Path=/; HttpOnly; Secure; Max-Age=0; Expires=${new Date().toUTCString()}`
-  );
+  res.setHeader("Set-Cookie", "aToken=; Path=/; HttpOnly; Max-Age=0");
 
   res.status(200).send({ message: "Logged out" });
 }
