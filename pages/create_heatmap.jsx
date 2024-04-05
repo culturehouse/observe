@@ -31,10 +31,10 @@ export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [canAccess, setCanAccess] = useState(false);
 
-  // Set heatmap data based on data type filter
   useEffect(() => {
-    if (!init) {
-      const response = fetch(`/api/create_heatmap/${router.query.id}`, {
+    if (!init && router.query.id) {
+      setLoading(true);
+      fetch(`/api/create_heatmap/${router.query.id}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -44,18 +44,20 @@ export default function Home() {
       })
         .then((data) => data.json())
         .then((r) => {
-          setLoading(false);
           setCanAccess(r.validEvent);
           setLoggedIn(r.loggedIn);
-          if (!r.validEvent && !r.loggedIn) {
-            return;
-          }
+          setLoading(false);
+
+          if (!r.validEvent && !r.loggedIn) return;
           setInstances(r.data);
           setInit(true);
           setFilteredInstances(r.data);
-          console.log(instances);
         });
     }
+  }, [init, router.query.id]);
+
+  // Set heatmap data based on data type filter
+  useEffect(() => {
     let newHeatmapData = filteredInstances
       .filter((instance) => selectedSet.has(instance.id))
       .reduce((accumulator, instance) => accumulator.concat(instance.data), []);
@@ -65,7 +67,7 @@ export default function Home() {
       );
     }
     setHeatmapData(newHeatmapData);
-  }, [selectedSet, dataTypeFilter]);
+  }, [filteredInstances, selectedSet, dataTypeFilter]);
 
   const createAggregateSNS = () => {
     if (instances.length == 0) {
@@ -77,7 +79,9 @@ export default function Home() {
       alert("Please select at least one instance to create your heatmap");
       return;
     }
-    const res2 = fetch("/api/create_heatmap/create_heatmap", {
+
+    setLoading(true);
+    fetch("/api/create_heatmap/create_heatmap", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -99,7 +103,6 @@ export default function Home() {
     })
       .then((data) => data.json())
       .then((r) => {
-        setLoading(false);
         if (!r.loggedIn) {
           alert("Heatmap was not created, please try again");
           return;
@@ -117,6 +120,8 @@ export default function Home() {
         } else {
           alert("Heatmap was not created, please try again");
         }
+
+        setLoading(false);
       });
   };
 
