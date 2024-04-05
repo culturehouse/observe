@@ -103,6 +103,7 @@ export default function Home() {
     })
       .then((data) => data.json())
       .then((r) => {
+        setLoading(false);
         if (!r.loggedIn) {
           alert("Heatmap was not created, please try again");
           return;
@@ -120,8 +121,6 @@ export default function Home() {
         } else {
           alert("Heatmap was not created, please try again");
         }
-
-        setLoading(false);
       });
   };
 
