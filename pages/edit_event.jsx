@@ -21,53 +21,18 @@ const myBucket = new AWS.S3({
   region: REGION,
 });
 
-// known bugs: update sketch doens't always work
-
-// function to post to database
-
 export default function Events({ setshowCreateEvent, eventInfo = [] }) {
   const [title, setTitle] = useState(eventInfo[0]?.title ?? "");
   const [date, setDate] = useState(eventInfo[0]?.date ?? "");
   const [location, setLocation] = useState(eventInfo[0]?.location ?? "");
   const [notes, setNotes] = useState(eventInfo[0]?.notes ?? "");
-  const [sketchFile, setSketchFile] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [imageUploaded, setImageUploaded] = useState(false);
-
-  console.log(
-    "title: " +
-      title +
-      ", date: " +
-      date +
-      ", location: " +
-      location +
-      "notes: " +
-      notes
+  const [imageUploaded, setImageUploaded] = useState(
+    eventInfo[0]?.imageUploaded ?? false
   );
-
-  const postToDatabase = async () => {
-    const id = eventInfo[0]?.id;
-    if (id === undefined) return;
-
-    fetch(`/api/update_event/${id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "PUT",
-      body: JSON.stringify({
-        title: title,
-        date: date,
-        location: location,
-        notes: notes,
-        imageUploaded: imageUploaded,
-      }),
-    }).then((r) => console.log(r));
-    uploadFile(sketchFile).then(() => {
-      window.location.reload(false);
-    });
-  };
+  const [sketchFile, setSketchFile] = useState(
+    eventInfo[0]?.imageUploaded ? { name: `${eventInfo[0]?.id}.jpg` } : null
+  );
+  const [progress, setProgress] = useState(0);
 
   const uploadFile = (file) => {
     const id = eventInfo[0]?.id;
@@ -91,16 +56,79 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
             console.error(err);
             reject(err);
           } else {
-            resolve();
+            resolve("The event sketch is uploaded.");
           }
         });
     });
   };
 
-  const handleFileChange = (e) => {
-    if (e.target.files) {
-      setImageUploaded(true);
-      setSketchFile(e.target.files[0]);
+  const deleteFile = () => {
+    const id = eventInfo[0]?.id;
+    if (id === undefined) return;
+
+    const params = {
+      Bucket: S3_BUCKET,
+      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
+    };
+
+    return new Promise((resolve, reject) => {
+      myBucket.deleteObject(params).send((err) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve("The event sketch is deleted.");
+        }
+      });
+    });
+  };
+
+  const postToDatabase = async () => {
+    const id = eventInfo[0]?.id;
+    if (id === undefined) return;
+
+    let isUploaded = imageUploaded;
+    if (imageUploaded && !sketchFile) {
+      await deleteFile().then(() => {
+        if (imageUploaded) isUploaded = false;
+      });
+    } else if (sketchFile.size) {
+      await uploadFile(sketchFile).then(() => {
+        if (!imageUploaded) isUploaded = true;
+      });
+    }
+
+    fetch(`/api/update_event/${id}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        title,
+        date,
+        location,
+        notes,
+        imageUploaded: isUploaded,
+      }),
+    })
+      .then((data) => data.json())
+      .then((r) => {
+        setTitle(r.title);
+        setDate(r.date);
+        setLocation(r.location);
+        setNotes(r.notes);
+        setImageUploaded(r.imageUploaded);
+        setshowCreateEvent(false);
+      });
+  };
+
+  const handleFileChange = (files) => {
+    if (files) {
+      setSketchFile(files[0]);
+    } else {
+      setSketchFile(null);
     }
   };
 
@@ -112,9 +140,7 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
         </Head>
         <div
           className={styles.closeButton}
-          onClick={() => {
-            setshowCreateEvent(false);
-          }}
+          onClick={() => setshowCreateEvent(false)}
         >
           <FiX size={20} />
         </div>
@@ -154,31 +180,19 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
             <input
               className={styles.fileInput}
               type="file"
-              checked={sketchFile != null}
-              onChange={(e) => handleFileChange(e)}
+              onChange={(e) => handleFileChange(e.target.files)}
             />
             <BsImage />
-            <p>
-              {sketchFile != null ? sketchFile.name : `${eventInfo[0]?.id}.jpg`}
-            </p>
+            <p>{sketchFile ? sketchFile.name : "Upload event sketch"}</p>
           </label>
-          <p
-            className={styles.x}
-            onClick={() => {
-              setSketchFile(null);
-            }}
-          >
-            <FiX />
-          </p>
+          {sketchFile && (
+            <p className={styles.x} onClick={() => handleFileChange(null)}>
+              <FiX />
+            </p>
+          )}
         </div>
         <div className={styles.createProject}>
-          <div
-            className={btnstyles.buttonCreate}
-            onClick={() => {
-              uploadFile(sketchFile);
-              postToDatabase();
-            }}
-          >
+          <div className={btnstyles.buttonCreate} onClick={postToDatabase}>
             UPDATE EVENT
           </div>
         </div>
