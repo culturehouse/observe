@@ -24,7 +24,7 @@ const myBucket = new AWS.S3({
 });
 
 export default function Events({
-  setshowCreateEvent,
+  setShowCreateEvent,
   project,
   setLoggedIn,
   setCanAccess,
@@ -94,9 +94,9 @@ export default function Events({
       ACL: "public-read",
       Body: file,
       Bucket: S3_BUCKET,
-      CacheControl: "no-cache",
-      Expires: new Date(),
-      Key: "events/" + id + ".png", // replace events with either events, heatmaps, or projects
+      // CacheControl: "no-cache",
+      // Expires: new Date(),
+      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 
     myBucket
@@ -190,7 +190,7 @@ export default function Events({
       <div className={styles.container}>
         <div
           className={styles.closeButton}
-          onClick={() => setshowCreateEvent(false)}
+          onClick={() => setShowCreateEvent(false)}
         >
           <FiX size={20} />
         </div>

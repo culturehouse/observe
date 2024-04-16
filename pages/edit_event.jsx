@@ -21,7 +21,7 @@ const myBucket = new AWS.S3({
   region: REGION,
 });
 
-export default function Events({ setshowCreateEvent, eventInfo = [] }) {
+export default function Events({ setShowCreateEvent, eventInfo = [] }) {
   const [title, setTitle] = useState(eventInfo[0]?.title ?? "");
   const [date, setDate] = useState(eventInfo[0]?.date ?? "");
   const [location, setLocation] = useState(eventInfo[0]?.location ?? "");
@@ -53,7 +53,6 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
         })
         .send((err) => {
           if (err) {
-            console.error(err);
             reject(err);
           } else {
             resolve("The event sketch is uploaded.");
@@ -74,7 +73,6 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
     return new Promise((resolve, reject) => {
       myBucket.deleteObject(params).send((err) => {
         if (err) {
-          console.error(err);
           reject(err);
         } else {
           resolve("The event sketch is deleted.");
@@ -89,13 +87,11 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
 
     let isUploaded = imageUploaded;
     if (imageUploaded && !sketchFile) {
-      await deleteFile().then(() => {
-        if (imageUploaded) isUploaded = false;
-      });
+      await deleteFile();
+      if (imageUploaded) isUploaded = false;
     } else if (sketchFile.size) {
-      await uploadFile(sketchFile).then(() => {
-        if (!imageUploaded) isUploaded = true;
-      });
+      await uploadFile(sketchFile);
+      if (!imageUploaded) isUploaded = true;
     }
 
     fetch(`/api/update_event/${id}`, {
@@ -120,7 +116,7 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
         setLocation(r.location);
         setNotes(r.notes);
         setImageUploaded(r.imageUploaded);
-        setshowCreateEvent(false);
+        setShowCreateEvent(false);
       });
   };
 
@@ -140,7 +136,7 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
         </Head>
         <div
           className={styles.closeButton}
-          onClick={() => setshowCreateEvent(false)}
+          onClick={() => setShowCreateEvent(false)}
         >
           <FiX size={20} />
         </div>
@@ -154,21 +150,21 @@ export default function Events({ setshowCreateEvent, eventInfo = [] }) {
           onChange={(e) => setTitle(e.target.value)}
           value={title}
         />
-        <h4 className={styles.fieldTitle}>Start date</h4>{" "}
+        <h4 className={styles.fieldTitle}>Start date</h4>
         <input
           className={styles.textInput}
           type="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
         />
-        <h4 className={styles.fieldTitle}>Location</h4>{" "}
+        <h4 className={styles.fieldTitle}>Location</h4>
         <input
           className={styles.textInput}
           type="text"
           onChange={(e) => setLocation(e.target.value)}
           value={location}
         />
-        <h4 className={styles.fieldTitle}>Notes</h4>{" "}
+        <h4 className={styles.fieldTitle}>Notes</h4>
         <input
           className={styles.textInput}
           type="text"

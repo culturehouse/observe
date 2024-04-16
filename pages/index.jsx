@@ -196,27 +196,6 @@ export default function Home() {
     }
   }, [hashArr]);
 
-  const createProject = () => {
-    const res = fetch("/api/home/createProject", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        // Populate the contents of the call accordingly
-        current: true,
-        description: "body.description",
-        events: [],
-        headerImage: "body.headerImage",
-        name: "body.name",
-        npId: "6430b9a5ddaafdd735d3b46a",
-        np_sub: "auth0|6430b9a4ca8c46f896a4709d",
-      }),
-    });
-  };
-
   const logout = () => {
     const res = fetch("/api/home/logout", {
       headers: {
@@ -335,7 +314,11 @@ export default function Home() {
                           {proj.imageUploaded ? (
                             <Image
                               className={styles.projectImage}
-                              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${proj.id}.png`}
+                              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${
+                                proj.id
+                              }.png?cache_bust=${Math.floor(
+                                Math.random() * 100
+                              )}`}
                               height={200}
                               width={300}
                             />

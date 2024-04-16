@@ -36,7 +36,7 @@ export default function Heatmap() {
   const [notes, setNotes] = useState("");
   const [filteredInstances, setFilteredInstances] = useState([]);
   const [selectedSet, setSelectedSet] = useState(new Set());
-  const [showInstances, setshowInstances] = useState(false);
+  const [showInstances, setShowInstances] = useState(false);
   const [heatmapInfo, setHeatmapInfo] = useState([{ title: "Loading..." }]);
   const [includeInfo, setIncludeInfo] = useState(false);
   const [includeNotes, setIncludeNotes] = useState(false);
@@ -131,9 +131,7 @@ export default function Heatmap() {
               console.log(hmap);
               setNotes(r.aggregateSNS.notes);
               setBackgroundLink(
-                `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${
-                  r.aggregateSNS.eventId
-                }.png?cache_bust=${Math.floor(Math.random() * 100)}`
+                `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${r.aggregateSNS.eventId}.png`
               );
             }
             await fetch(`api/instances/${r.aggregateSNS.eventId}`, {
@@ -228,7 +226,7 @@ export default function Heatmap() {
     const backgroundImagePromise = (async () => {
       if (backgroundLink.includes("culturehouse-images")) {
         const r = await fetch(
-          backgroundLink + "?cache_bust=" + Math.floor(Math.random() * 100)
+          `${backgroundLink}?cache_bust=${Math.floor(Math.random() * 100)}`
         );
         if (!r.ok) throw new Error("bad image");
         const backgroundImageData = await r.arrayBuffer();
@@ -329,9 +327,9 @@ export default function Heatmap() {
             setFilteredInstances={setFilteredInstances}
             selectedSet={selectedSet}
             setSelectedSet={setSelectedSet}
-            setshowCreateEvent={setshowInstances}
+            setShowCreateEvent={setShowInstances}
             setDataTypeFilter={setDataTypeFilter}
-            setShow={setshowInstances}
+            setShow={setShowInstances}
             show={showInstances}
             filters={filters}
             setFilters={setFilters}
@@ -389,7 +387,7 @@ export default function Heatmap() {
                   <div
                     className={btnstyles.buttonUnder}
                     onClick={() => {
-                      setshowInstances(!showInstances);
+                      setShowInstances(!showInstances);
                     }}
                   >
                     Edit filters

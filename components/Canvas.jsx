@@ -336,7 +336,9 @@ export default function Canvas({ setLoggedIn, setCanAccess }) {
           </div>
           <Image
             className={styles.picture}
-            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventId}.png`}
+            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventId}.png?cache_bust=${Math.floor(
+              Math.random() * 100
+            )}`}
             height={559}
             width={559}
           />

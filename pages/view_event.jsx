@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import styles from "../styles/view_event.module.css";
 import ObserveLogo from "../components/ObserveLogo";
 import btnstyles from "../styles/button.module.css";
@@ -21,11 +22,10 @@ import BackgroundBottom3 from "../components/BackgroundBottom3";
 export default function View_Event() {
   const [eventInfo, setEventInfo] = useState([{ title: "Loading..." }]);
   const [dataFetched, setDataFetched] = useState(false);
-  const [showCreateEvent, setshowCreateEvent] = useState(false);
+  const [showCreateEvent, setShowCreateEvent] = useState(false);
   const [heatmaps, setHeatmaps] = useState([]);
   const [firstHeatmapIndex, setFirstHeatmapIndex] = useState(0);
   const [showClipboard, setShowClipboard] = useState(false);
-  const [coverImageURL, setCoverImageURL] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [canAccess, setCanAccess] = useState(false);
 
@@ -50,9 +50,6 @@ export default function View_Event() {
           setCanAccess(r.access);
           if (r.loggedIn && r.access) {
             setEventInfo(r.events);
-            setCoverImageURL(
-              `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${id}.png`
-            );
             await fetch(`/api/view_event_heatmaps/${id}`, {
               headers: {
                 Accept: "application/json",
@@ -114,7 +111,7 @@ export default function View_Event() {
       {showCreateEvent && (
         <div className={styles.edit_event}>
           <EditEvent
-            setshowCreateEvent={setshowCreateEvent}
+            setShowCreateEvent={setShowCreateEvent}
             eventInfo={eventInfo}
           />
         </div>
@@ -130,6 +127,23 @@ export default function View_Event() {
             ending={eventInfo[0]?.title ?? ""}
           ></Crumbs>
         </div>
+        {eventInfo[0]?.imageUploaded ? (
+          <Image
+            className={styles.picture}
+            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${
+              eventInfo[0]?.id
+            }.png?cache_bust=${Math.floor(Math.random() * 100)}`}
+            height={320}
+            width={320}
+          />
+        ) : (
+          <Image
+            className={styles.picture}
+            src={`/defaultSketch.png`}
+            height={320}
+            width={320}
+          />
+        )}
         <div className={styles.header}>
           <div className={styles.title}>
             <h1 className={styles.maintitle}>{eventInfo[0]?.title}</h1>
@@ -161,7 +175,7 @@ export default function View_Event() {
               <div
                 className={btnstyles.buttonEdit}
                 onClick={() => {
-                  setshowCreateEvent(!showCreateEvent);
+                  setShowCreateEvent(!showCreateEvent);
                 }}
               >
                 <FiEdit2 />

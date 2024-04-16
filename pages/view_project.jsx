@@ -33,10 +33,10 @@ import BackgroundBottom2 from "../components/BackgroundBottom2";
 export default function View_Project() {
   const [projectInfo, setProjectInfo] = useState([{ name: "Loading..." }]);
   const [dataFetched, setDataFetched] = useState(false);
-  const [showCreateEvent, setshowCreateEvent] = useState(false);
+  const [showCreateEvent, setShowCreateEvent] = useState(false);
   const [eventInfo, setEventInfo] = useState([{ title: "Loading..." }]);
   const [current, setCurrent] = useState(true);
-  const [showEditProject, setshowEditProject] = useState(false);
+  const [showEditProject, setShowEditProject] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [startIndex, setStartIndex] = useState(-1);
@@ -213,7 +213,7 @@ export default function View_Project() {
       {showCreateEvent && (
         <div className={pstyles.createEventPopup}>
           <Event
-            setshowCreateEvent={setshowCreateEvent}
+            setShowCreateEvent={setShowCreateEvent}
             project={projectInfo[0]}
             setLoggedIn={setLoggedIn}
             setCanAccess={setCanAccess}
@@ -223,10 +223,8 @@ export default function View_Project() {
       {showEditProject && id && (
         <div className={pstyles.createEventPopup}>
           <EditProject
-            setshowEditProject={setshowEditProject}
-            id={id}
-            setLoggedIn={setLoggedIn}
-            setCanAccess={setCanAccess}
+            setShowEditProject={setShowEditProject}
+            projectInfo={projectInfo}
           />
         </div>
       )}
@@ -237,17 +235,16 @@ export default function View_Project() {
           <ObserveLogo />
         </div>
         <div className={pstyles.crumbs}>
-          <Crumbs
-            crumbs={{}}
-            ending={projectInfo[0] ? projectInfo[0]["name"] : ""}
-          ></Crumbs>
+          <Crumbs crumbs={{}} ending={projectInfo[0]?.name ?? ""}></Crumbs>
         </div>
         <div className={pstyles.middle}>
           <div className={pstyles.pImage}>
             {projectInfo[0].imageUploaded ? (
               <Image
                 className={pstyles.picture}
-                src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${projectInfo[0].id}.png`}
+                src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${
+                  projectInfo[0]?.id
+                }.png?cache_bust=${Math.floor(Math.random() * 100)}`}
                 height={320}
                 width={585}
               />
@@ -269,7 +266,7 @@ export default function View_Project() {
               <div
                 className={pstyles.circle}
                 onClick={() => {
-                  setshowEditProject(!showEditProject);
+                  setShowEditProject(!showEditProject);
                 }}
               >
                 <div className={pstyles.pencil}>
@@ -335,7 +332,7 @@ export default function View_Project() {
                 <div
                   className={pstyles.createEvent}
                   onClick={() => {
-                    setshowCreateEvent(!showCreateEvent);
+                    setShowCreateEvent(!showCreateEvent);
                   }}
                 >
                   <div className={pstyles.plus}>
