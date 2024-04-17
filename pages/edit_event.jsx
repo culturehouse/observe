@@ -80,7 +80,7 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
       });
     });
   };
-e 
+
   const postToDatabase = async () => {
     const id = eventInfo[0]?.id;
     if (id === undefined) return;
