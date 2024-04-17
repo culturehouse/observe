@@ -80,18 +80,20 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
       });
     });
   };
-
+e 
   const postToDatabase = async () => {
     const id = eventInfo[0]?.id;
     if (id === undefined) return;
 
     let isUploaded = imageUploaded;
     if (imageUploaded && !sketchFile) {
-      await deleteFile();
-      if (imageUploaded) isUploaded = false;
+      await deleteFile().then(() => {
+        if (imageUploaded) isUploaded = false;
+      });
     } else if (sketchFile.size) {
-      await uploadFile(sketchFile);
-      if (!imageUploaded) isUploaded = true;
+      await uploadFile(sketchFile).then(() => {
+        if (!imageUploaded) isUploaded = true;
+      });
     }
 
     fetch(`/api/update_event/${id}`, {

@@ -86,14 +86,16 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
 
     let isUploaded = imageUploaded;
     if (imageUploaded && !coverFile) {
-      await deleteFile();
-      if (imageUploaded) isUploaded = false;
+      await deleteFile().then(() => {
+        if (imageUploaded) isUploaded = false;
+      });
     } else if (coverFile.size) {
-      await uploadFile(coverFile);
-      if (!imageUploaded) isUploaded = true;
+      await uploadFile(coverFile).then(() => {
+        if (!imageUploaded) isUploaded = true;
+      });
     }
 
-    await fetch(`/api/edit_project/${id}`, {
+    fetch(`/api/edit_project/${id}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

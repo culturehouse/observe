@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import styles from "../styles/create_event.module.css";
-import btnstyles from "../styles/button.module.css";
-import EventCode from "../lib/eventCode";
 import { BsImage } from "react-icons/bs";
 import { BiCopy } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
+import styles from "../styles/create_event.module.css";
+import btnstyles from "../styles/button.module.css";
+import EventCode from "../lib/eventCode";
 
 import AWS from "aws-sdk";
 
@@ -33,16 +33,41 @@ export default function Events({
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
-  const [sketch, setSketch] = useState(false);
+  const [sketch, setSketch] = useState(null);
   const [eventUploaded, setEventUploaded] = useState(false);
   const [eventUploadRes, setEventUploadRes] = useState({});
-  const [imageUploaded, setImageUploaded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showClipboard, setShowClipboard] = useState(false);
   const [postInProgress, setPostInProgress] = useState(false);
   const [eventCode, setEventCode] = useState("");
 
   const router = useRouter();
+
+  const uploadFile = (file, id) => {
+    const params = {
+      ACL: "public-read",
+      Body: file,
+      Bucket: S3_BUCKET,
+      // CacheControl: "no-cache",
+      // Expires: new Date(),
+      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
+    };
+
+    return new Promise((resolve, reject) => {
+      myBucket
+        .putObject(params)
+        .on("httpUploadProgress", (evt) => {
+          setProgress(Math.round((evt.loaded / evt.total) * 100));
+        })
+        .send((err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve("The event sketch is uploaded.");
+          }
+        });
+    });
+  };
 
   const postToDatabase = () => {
     setPostInProgress(true);
@@ -64,55 +89,53 @@ export default function Events({
           },
           method: "POST",
           body: JSON.stringify({
-            title: title,
-            date: date,
-            location: location,
+            title,
+            date,
+            location,
+            notes,
             eCode: r.eCode,
             id: project.id,
-            notes: notes,
             npId: project.npId,
             np_sub: project.np_sub,
-            imageUploaded: imageUploaded,
           }),
         })
           .then((data) => data.json())
-          .then((res) => {
+          .then(async (res) => {
             setLoggedIn(res.loggedIn);
             setCanAccess(res.access);
-            if (res.access && res.loggedIn) {
-              uploadFile(sketch, res.newEvent.id);
+
+            const isCreated = res.loggedIn && res.access && res.newEvent?.id;
+            if (isCreated) {
               setEventUploaded(true);
               setEventUploadRes(res);
+
+              if (sketch) {
+                await uploadFile(sketch, res.newEvent.id).then(async () => {
+                  await fetch(`/api/update_event/${res.newEvent.id}`, {
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      "Access-Control-Allow-Origin": "*",
+                    },
+                    method: "PUT",
+                    body: JSON.stringify({
+                      imageUploaded: true,
+                    }),
+                  });
+                });
+              }
             }
+
             setPostInProgress(false);
           });
       });
   };
 
-  const uploadFile = (file, id) => {
-    const params = {
-      ACL: "public-read",
-      Body: file,
-      Bucket: S3_BUCKET,
-      // CacheControl: "no-cache",
-      // Expires: new Date(),
-      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
-    };
-
-    myBucket
-      .putObject(params)
-      .on("httpUploadProgress", (evt) => {
-        setProgress(Math.round((evt.loaded / evt.total) * 100));
-      })
-      .send((err) => {
-        if (err) console.log(err);
-      });
-  };
-
-  const handleFileChange = (e) => {
-    if (e.target.files) {
-      setImageUploaded(true);
-      setSketch(e.target.files[0]);
+  const handleFileChange = (files) => {
+    if (files) {
+      setSketch(files[0]);
+    } else {
+      setSketch(null);
     }
   };
 
@@ -160,7 +183,7 @@ export default function Events({
               <div className={styles.invisible} />
             )}
           </div>
-          {imageUploaded ? <p>Image upload progress: {progress}%</p> : <></>}
+          {sketch ? <p>Image upload progress: {progress}%</p> : <></>}
           <p
             onClick={() => {
               router.push(
@@ -177,7 +200,6 @@ export default function Events({
   }
 
   if (postInProgress) {
-    // maybe add  && progress < 100 (so that image uploaded is part of loading)
     return (
       <div className={styles.container}>
         <h1>Loading...</h1>
@@ -205,47 +227,47 @@ export default function Events({
             setTitle(e.target.value);
             setEventCode(EventCode(title));
           }}
+          value={title}
         />
         <h4 className={styles.fieldTitle}>Start date</h4>
         <input
           className={styles.textInput}
           type="date"
           onChange={(e) => setDate(e.target.value)}
+          value={date}
         />
         <h4 className={styles.fieldTitle}>Location</h4>
         <input
           className={styles.textInput}
           type="text"
           onChange={(e) => setLocation(e.target.value)}
+          value={location}
         />
         <h4 className={styles.fieldTitle}>Notes</h4>
         <input
           className={styles.textInput}
           type="text"
           onChange={(e) => setNotes(e.target.value)}
+          value={notes}
         />
         <div className={styles.fileSelectContainer}>
           <label className={styles.fileContainer}>
             <input
               className={styles.fileInput}
               type="file"
-              checked={sketch}
-              onChange={(e) => handleFileChange(e)}
+              onChange={(e) => handleFileChange(e.target.files)}
             />
             <BsImage />
             <p>{sketch ? sketch.name : "Add event sketch (.png)"}</p>
           </label>
-          <p className={styles.x} onClick={() => setSketch(null)}>
-            <FiX />
-          </p>
+          {sketch && (
+            <p className={styles.x} onClick={() => handleFileChange(null)}>
+              <FiX />
+            </p>
+          )}
         </div>
         <div className={styles.createProject}>
-          <div
-            className={btnstyles.buttonCreate}
-            onClick={() => {
-              postToDatabase();
-            }}
-          >
+          <div className={btnstyles.buttonCreate} onClick={postToDatabase}>
             CREATE EVENT
           </div>
         </div>

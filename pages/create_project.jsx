@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../styles/create_event.module.css";
-import btnstyles from "../styles/button.module.css";
 import Image from "next/image";
 import { BsImage } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
 import LoadingPage from "../components/LoadingPage";
+import styles from "../styles/create_event.module.css";
+import btnstyles from "../styles/button.module.css";
 
 import AWS from "aws-sdk";
 
@@ -23,7 +23,7 @@ const myBucket = new AWS.S3({
 });
 
 export default function Projects({
-  setshowCreateProject,
+  setShowCreateProject,
   nonprofitInfo,
   setLoggedIn,
   setCanAccess,
@@ -31,58 +31,10 @@ export default function Projects({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [projectImage, setProjectImage] = useState(null);
-  const [imageUploaded, setImageUploaded] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [postInProgress, setPostInProgress] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const router = useRouter();
-  // useEffect(() => {
-  //   fetch('../public/defaultProject.png')
-  //       .then(res => res.blob()) // Gets the response and returns it as a blob
-  //       .then(blob => {
-  //         // Here's where you get access to the blob
-  //         // And you can use it for whatever you want
-  //         // Like calling ref().put(blob)
-
-  //         // Here, I use it to make an image appear on the page
-  //         let projectFile = new File([blob], "defaultProject.png")
-  //         setProjectImage(projectFile);
-  //     });
-  //   })
-
-  const postToDatabase = async () => {
-    setPostInProgress(true);
-    await fetch("/api/create_project/create_project", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        npId: nonprofitInfo.non_profit[0].id,
-        np_sub: nonprofitInfo.non_profit[0].np_sub,
-        imageUploaded: imageUploaded,
-      }),
-    })
-      .then((data) => data.json())
-      .then((r) => {
-        if (!r.loggedIn) {
-          setLoggedIn(false);
-        } else if (!r.canAccess) {
-          setLoggedIn(true);
-          setCanAccess(false);
-        }
-        setLoggedIn(true);
-        setCanAccess(true);
-        setPostInProgress(false);
-        uploadFile(projectImage, r.newProject.id).then(() => {
-          router.push("/view_project?id=" + r.newProject.id);
-        });
-      });
-  };
 
   const uploadFile = (file, id) => {
     const params = {
@@ -102,30 +54,70 @@ export default function Projects({
         })
         .send((err) => {
           if (err) {
-            console.error(err);
             reject(err);
           } else {
-            resolve();
+            resolve("The project cover image is uploaded.");
           }
         });
     });
   };
 
-  const handleFileChange = (e) => {
-    if (e.target.files) {
-      setImageUploaded(true);
-      setProjectImage(e.target.files[0]);
+  const postToDatabase = () => {
+    setPostInProgress(true);
+    fetch("/api/create_project/create_project", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        description,
+        npId: nonprofitInfo.non_profit[0].id,
+        np_sub: nonprofitInfo.non_profit[0].np_sub,
+      }),
+    })
+      .then((data) => data.json())
+      .then(async (r) => {
+        setLoggedIn(r.loggedIn);
+        setCanAccess(r.canAccess);
+
+        const isCreated = r.loggedIn && r.canAccess && r.newProject?.id;
+        if (isCreated && projectImage) {
+          await uploadFile(projectImage, r.newProject.id).then(async () => {
+            await fetch(`/api/edit_project/${r.newProject.id}`, {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+              method: "PUT",
+              body: JSON.stringify({
+                imageUploaded: true,
+              }),
+            });
+          });
+        }
+
+        setPostInProgress(false);
+        setShowCreateProject(false);
+        if (isCreated) {
+          router.push(`/view_project?id=${r.newProject.id}`);
+        }
+      });
+  };
+
+  const handleFileChange = (files) => {
+    if (files) {
+      setProjectImage(files[0]);
+    } else {
+      setProjectImage(null);
     }
   };
 
   if (postInProgress) {
-    // setCreatingProject(true);
     return <LoadingPage />;
-    // return (
-    //   <div className={styles.container}>
-    //     <h1>Creating project...</h1>
-    //   </div>
-    // );
   }
 
   return (
@@ -133,9 +125,7 @@ export default function Projects({
       <div className={styles.container}>
         <div
           className={styles.closeButton}
-          onClick={() => {
-            setshowCreateProject(false);
-          }}
+          onClick={() => setShowCreateProject(false)}
         >
           <FiX size={20} />
         </div>
@@ -161,33 +151,23 @@ export default function Projects({
             <input
               className={styles.fileInput}
               type="file"
-              checked={projectImage != null}
-              onChange={(e) => handleFileChange(e)}
+              onChange={(e) => handleFileChange(e.target.files)}
             />
             <BsImage />
             <p>
-              {projectImage != null
+              {projectImage
                 ? projectImage.name
                 : "Upload cover image (.png only)"}
             </p>
           </label>
-          <p
-            className={styles.x}
-            onClick={() => {
-              setImageUploaded(false);
-              setProjectImage(null);
-            }}
-          >
-            <FiX />
-          </p>
+          {projectImage && (
+            <p className={styles.x} onClick={() => handleFileChange(null)}>
+              <FiX />
+            </p>
+          )}
         </div>
         <div className={styles.createProject}>
-          <div
-            className={btnstyles.buttonCreate}
-            onClick={() => {
-              postToDatabase();
-            }}
-          >
+          <div className={btnstyles.buttonCreate} onClick={postToDatabase}>
             CREATE PROJECT
           </div>
         </div>

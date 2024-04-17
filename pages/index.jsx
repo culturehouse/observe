@@ -225,7 +225,7 @@ export default function Home() {
           {showCreateProject && (
             <div className={styles.create_project}>
               <CreateProject
-                setshowCreateProject={setShowCreateProject}
+                setShowCreateProject={setShowCreateProject}
                 nonprofitInfo={NPData}
                 setLoggedIn={setLoggedIn}
                 setCanAccess={setCanAccess}
