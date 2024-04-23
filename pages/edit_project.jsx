@@ -68,8 +68,6 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
 
     const params = {
       Bucket: S3_BUCKET,
-      CacheControl: "no-cache",
-      Expires: new Date(),
       Key: `projects/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 
