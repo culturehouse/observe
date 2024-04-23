@@ -69,6 +69,8 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
 
     const params = {
       Bucket: S3_BUCKET,
+      CacheControl: "no-cache",
+      Expires: new Date(),
       Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 
