@@ -49,7 +49,6 @@ export default function Events({
       Body: file,
       Bucket: S3_BUCKET,
       CacheControl: "no-cache",
-      Expires: new Date(),
       Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 

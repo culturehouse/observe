@@ -30,7 +30,6 @@ const UploadImageToS3WithNativeSdk = () => {
       Body: file,
       Bucket: S3_BUCKET,
       CacheControl: "no-cache",
-      Expires: new Date(),
       Key: `events/${file.name}`, // replace events with either events, heatmaps, or projects
     };
 
