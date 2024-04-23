@@ -42,6 +42,7 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
       ACL: "public-read",
       Body: file,
       Bucket: S3_BUCKET,
+      CacheControl: "no-cache",
       Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 

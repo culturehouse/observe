@@ -41,6 +41,7 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
       ACL: "public-read",
       Body: file,
       Bucket: S3_BUCKET,
+      CacheControl: "no-cache",
       Key: `projects/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 

@@ -227,9 +227,7 @@ export default function Home() {
               {/* this needs changing */}
               <Image
                 className={styles.backgroundImage}
-                src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventId}.png?cache_bust=${Math.floor(
-                  Math.random() * 100
-                )}`}
+                src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventId}.png`}
                 height={350}
                 width={350}
               />

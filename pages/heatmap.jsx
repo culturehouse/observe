@@ -225,9 +225,7 @@ export default function Heatmap() {
 
     const backgroundImagePromise = (async () => {
       if (backgroundLink.includes("culturehouse-images")) {
-        const r = await fetch(
-          `${backgroundLink}?cache_bust=${Math.floor(Math.random() * 100)}`
-        );
+        const r = await fetch(`${backgroundLink}`);
         if (!r.ok) throw new Error("bad image");
         const backgroundImageData = await r.arrayBuffer();
         return new Uint8Array(backgroundImageData);

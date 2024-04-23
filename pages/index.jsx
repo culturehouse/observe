@@ -314,11 +314,7 @@ export default function Home() {
                           {proj.imageUploaded ? (
                             <Image
                               className={styles.projectImage}
-                              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${
-                                proj.id
-                              }.png?cache_bust=${Math.floor(
-                                Math.random() * 100
-                              )}`}
+                              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${proj.id}.png`}
                               height={200}
                               width={300}
                             />

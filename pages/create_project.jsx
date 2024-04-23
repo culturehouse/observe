@@ -41,8 +41,8 @@ export default function Projects({
       ACL: "public-read",
       Body: file,
       Bucket: S3_BUCKET,
-      // CacheControl: "no-cache",
-      // Expires: new Date(),
+      CacheControl: "no-cache",
+      Expires: new Date(),
       Key: `projects/${id}.png`, // replace events with either events, heatmaps, or projects
     };
 
