@@ -3,7 +3,7 @@ module.exports = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "culturehouse-images.s3.ap-northeast-2.amazonaws.com",
+        hostname: "observe-images.s3.amazonaws.com",
       },
     ],
   },

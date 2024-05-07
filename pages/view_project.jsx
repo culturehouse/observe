@@ -242,7 +242,7 @@ export default function View_Project() {
             {projectInfo[0].imageUploaded ? (
               <Image
                 className={pstyles.picture}
-                src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${projectInfo[0]?.id}.png`}
+                src={`https://observe-images.s3.amazonaws.com/projects/${projectInfo[0]?.id}.png`}
                 height={320}
                 width={585}
               />

@@ -6,21 +6,7 @@ import { FiX } from "react-icons/fi";
 import LoadingPage from "../components/LoadingPage";
 import styles from "../styles/create_event.module.css";
 import btnstyles from "../styles/button.module.css";
-
-import AWS from "aws-sdk";
-
-const S3_BUCKET = "culturehouse-images";
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-  accessKeyId: "AKIA2AAODY6NWVHHAZ4B",
-  secretAccessKey: "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",
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
-  region: REGION,
-});
+import readFileAsDataURL from "../helpers/readFileAsDataURL";
 
 export default function Projects({
   setShowCreateProject,
@@ -32,34 +18,8 @@ export default function Projects({
   const [description, setDescription] = useState("");
   const [projectImage, setProjectImage] = useState(null);
   const [postInProgress, setPostInProgress] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const router = useRouter();
-
-  const uploadFile = (file, id) => {
-    const params = {
-      ACL: "public-read",
-      Body: file,
-      Bucket: S3_BUCKET,
-      CacheControl: "no-cache",
-      Key: `projects/${id}.png`, // replace events with either events, heatmaps, or projects
-    };
-
-    return new Promise((resolve, reject) => {
-      myBucket
-        .putObject(params)
-        .on("httpUploadProgress", (evt) => {
-          setProgress(Math.round((evt.loaded / evt.total) * 100));
-        })
-        .send((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve("The project cover image is uploaded.");
-          }
-        });
-    });
-  };
 
   const postToDatabase = () => {
     setPostInProgress(true);
@@ -84,7 +44,21 @@ export default function Projects({
 
         const isCreated = r.loggedIn && r.canAccess && r.newProject?.id;
         if (isCreated && projectImage) {
-          await uploadFile(projectImage, r.newProject.id).then(async () => {
+          const file = await readFileAsDataURL(projectImage);
+          const response = await fetch("/api/uploadImage", {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            method: "PUT",
+            body: JSON.stringify({
+              key: `projects/${res.newProject.id}.png`,
+              file,
+            }),
+          });
+
+          if (response.ok) {
             await fetch(`/api/edit_project/${r.newProject.id}`, {
               headers: {
                 Accept: "application/json",
@@ -96,7 +70,7 @@ export default function Projects({
                 imageUploaded: true,
               }),
             });
-          });
+          }
         }
 
         setPostInProgress(false);

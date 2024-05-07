@@ -319,7 +319,7 @@ export default function Canvas({ setLoggedIn, eventId }) {
           </div>
           <Image
             className={styles.picture}
-            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${router.query.eventId}.png`}
+            src={`https://observe-images.s3.amazonaws.com/events/${router.query.eventId}.png`}
             height={559}
             width={559}
           />

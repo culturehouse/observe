@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
+    "@aws-sdk/client-s3": "^3.564.0",
     "@nextui-org/react": "^1.0.0-beta.12",
     "@prisma/client": "^5.10.0",
     "auth0-js": "^9.24.0",
-    "aws-sdk": "^2.1368.0",
     "d3": "^7.8.4",
     "eslint-config-next": "^14.1.0",
     "jsonwebtoken": "^9.0.0",

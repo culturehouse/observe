@@ -240,7 +240,7 @@ export default function Canvas({ setLoggedIn, instance }) {
         <div className={styles.leftContent}>
           <Image
             className={styles.pictureViewInstance}
-            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventId}.png`}
+            src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
             height={559}
             width={559}
           />

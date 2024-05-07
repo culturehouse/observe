@@ -80,7 +80,7 @@ export default function View_Instance() {
             ]}
           />
         )}
-        {/* <DensityGraph data={instance[0].data} backgroundLink={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${router.query.eventId}.png`}/> */}
+        {/* <DensityGraph data={instance[0].data} backgroundLink={`https://observe-images.s3.amazonaws.com/events/${router.query.eventId}.png`}/> */}
         {/* <div className={styles.densityGraph}>
           <DensityGraph data={instance[0].data}/>
         </div> */}

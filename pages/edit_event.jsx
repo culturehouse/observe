@@ -1,25 +1,11 @@
-import Head from "next/head";
 import { useState } from "react";
+import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/create_event.module.css";
-import btnstyles from "../styles/button.module.css";
 import { BsImage } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
-
-import AWS from "aws-sdk";
-
-const S3_BUCKET = "culturehouse-images";
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-  accessKeyId: "AKIA2AAODY6NWVHHAZ4B",
-  secretAccessKey: "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",
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
-  region: REGION,
-});
+import styles from "../styles/create_event.module.css";
+import btnstyles from "../styles/button.module.css";
+import readFileAsDataURL from "../helpers/readFileAsDataURL";
 
 export default function Events({ setShowCreateEvent, eventInfo = [] }) {
   const [title, setTitle] = useState(eventInfo[0]?.title ?? "");
@@ -30,57 +16,8 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
     eventInfo[0]?.imageUploaded ?? false
   );
   const [sketchFile, setSketchFile] = useState(
-    eventInfo[0]?.imageUploaded ? { name: `${eventInfo[0]?.id}.jpg` } : null
+    eventInfo[0]?.imageUploaded ? { name: `${eventInfo[0]?.id}.png` } : null
   );
-  const [progress, setProgress] = useState(0);
-
-  const uploadFile = (file) => {
-    const id = eventInfo[0]?.id;
-    if (id === undefined) return;
-
-    const params = {
-      ACL: "public-read",
-      Body: file,
-      Bucket: S3_BUCKET,
-      CacheControl: "no-cache",
-      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
-    };
-
-    return new Promise((resolve, reject) => {
-      myBucket
-        .putObject(params)
-        .on("httpUploadProgress", (evt) => {
-          setProgress(Math.round((evt.loaded / evt.total) * 100));
-        })
-        .send((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve("The event sketch is uploaded.");
-          }
-        });
-    });
-  };
-
-  const deleteFile = () => {
-    const id = eventInfo[0]?.id;
-    if (id === undefined) return;
-
-    const params = {
-      Bucket: S3_BUCKET,
-      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
-    };
-
-    return new Promise((resolve, reject) => {
-      myBucket.deleteObject(params).send((err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve("The event sketch is deleted.");
-        }
-      });
-    });
-  };
 
   const postToDatabase = async () => {
     const id = eventInfo[0]?.id;
@@ -88,13 +25,28 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
 
     let isUploaded = imageUploaded;
     if (imageUploaded && !sketchFile) {
-      await deleteFile().then(() => {
-        if (imageUploaded) isUploaded = false;
+      const deleteRes = await fetch("/api/deleteImage", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "DELETE",
+        body: JSON.stringify({ key: `events/${id}.png` }),
       });
+      if (deleteRes.ok && imageUploaded) isUploaded = false;
     } else if (sketchFile.size) {
-      await uploadFile(sketchFile).then(() => {
-        if (!imageUploaded) isUploaded = true;
+      const file = await readFileAsDataURL(sketchFile);
+      const uploadRes = await fetch("/api/uploadImage", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "PUT",
+        body: JSON.stringify({ key: `events/${id}.png`, file }),
       });
+      if (uploadRes.ok && !imageUploaded) isUploaded = true;
     }
 
     fetch(`/api/update_event/${id}`, {

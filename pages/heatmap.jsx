@@ -131,7 +131,7 @@ export default function Heatmap() {
               console.log(hmap);
               setNotes(r.aggregateSNS.notes);
               setBackgroundLink(
-                `https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${r.aggregateSNS.eventId}.png`
+                `https://observe-images.s3.amazonaws.com/events/${r.aggregateSNS.eventId}.png`
               );
             }
             await fetch(`api/instances/${r.aggregateSNS.eventId}`, {
@@ -224,7 +224,7 @@ export default function Heatmap() {
     backgroundImageNode.remove();
 
     const backgroundImagePromise = (async () => {
-      if (backgroundLink.includes("culturehouse-images")) {
+      if (backgroundLink.includes("observe-images")) {
         const r = await fetch(`${backgroundLink}`);
         if (!r.ok) throw new Error("bad image");
         const backgroundImageData = await r.arrayBuffer();

@@ -314,7 +314,7 @@ export default function Home() {
                           {proj.imageUploaded ? (
                             <Image
                               className={styles.projectImage}
-                              src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/projects/${proj.id}.png`}
+                              src={`https://observe-images.s3.amazonaws.com/projects/${proj.id}.png`}
                               height={200}
                               width={300}
                             />

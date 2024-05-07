@@ -130,7 +130,7 @@ export default function View_Event() {
         {eventInfo[0]?.imageUploaded ? (
           <Image
             className={styles.picture}
-            src={`https://culturehouse-images.s3.ap-northeast-2.amazonaws.com/events/${eventInfo[0]?.id}.png`}
+            src={`https://observe-images.s3.amazonaws.com/events/${eventInfo[0]?.id}.png`}
             height={320}
             width={320}
           />

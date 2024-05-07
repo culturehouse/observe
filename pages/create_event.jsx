@@ -7,21 +7,7 @@ import { FiX } from "react-icons/fi";
 import styles from "../styles/create_event.module.css";
 import btnstyles from "../styles/button.module.css";
 import EventCode from "../lib/eventCode";
-
-import AWS from "aws-sdk";
-
-const S3_BUCKET = "culturehouse-images";
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-  accessKeyId: "AKIA2AAODY6NWVHHAZ4B",
-  secretAccessKey: "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",
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: S3_BUCKET },
-  region: REGION,
-});
+import readFileAsDataURL from "../helpers/readFileAsDataURL";
 
 export default function Events({
   setShowCreateEvent,
@@ -36,37 +22,11 @@ export default function Events({
   const [sketch, setSketch] = useState(null);
   const [eventUploaded, setEventUploaded] = useState(false);
   const [eventUploadRes, setEventUploadRes] = useState({});
-  const [progress, setProgress] = useState(0);
   const [showClipboard, setShowClipboard] = useState(false);
   const [postInProgress, setPostInProgress] = useState(false);
   const [eventCode, setEventCode] = useState("");
 
   const router = useRouter();
-
-  const uploadFile = (file, id) => {
-    const params = {
-      ACL: "public-read",
-      Body: file,
-      Bucket: S3_BUCKET,
-      CacheControl: "no-cache",
-      Key: `events/${id}.png`, // replace events with either events, heatmaps, or projects
-    };
-
-    return new Promise((resolve, reject) => {
-      myBucket
-        .putObject(params)
-        .on("httpUploadProgress", (evt) => {
-          setProgress(Math.round((evt.loaded / evt.total) * 100));
-        })
-        .send((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve("The event sketch is uploaded.");
-          }
-        });
-    });
-  };
 
   const postToDatabase = () => {
     setPostInProgress(true);
@@ -109,7 +69,21 @@ export default function Events({
               setEventUploadRes(res);
 
               if (sketch) {
-                await uploadFile(sketch, res.newEvent.id).then(async () => {
+                const file = await readFileAsDataURL(sketch);
+                const response = await fetch("/api/uploadImage", {
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                  },
+                  method: "PUT",
+                  body: JSON.stringify({
+                    key: `events/${res.newEvent.id}.png`,
+                    file,
+                  }),
+                });
+
+                if (response.ok) {
                   await fetch(`/api/update_event/${res.newEvent.id}`, {
                     headers: {
                       Accept: "application/json",
@@ -121,7 +95,7 @@ export default function Events({
                       imageUploaded: true,
                     }),
                   });
-                });
+                }
               }
             }
 
@@ -182,7 +156,7 @@ export default function Events({
               <div className={styles.invisible} />
             )}
           </div>
-          {sketch ? <p>Image upload progress: {progress}%</p> : <></>}
+          {/* {sketch ? <p>Image upload progress: {progress}%</p> : <></>} */}
           <p
             onClick={() => {
               router.push(
