@@ -47,9 +47,9 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
         body: JSON.stringify({ key: `events/${id}.png`, file }),
       });
       if (uploadRes.ok) {
-        revalidatePath(
-          `https://observe-images.s3.amazonaws.com/events/${id}.png`
-        );
+        // revalidatePath(
+        //   `https://observe-images.s3.amazonaws.com/events/${id}.png`
+        // );
         if (!imageUploaded) isUploaded = true;
       }
     }

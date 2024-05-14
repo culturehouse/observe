@@ -47,9 +47,9 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
         body: JSON.stringify({ key: `projects/${id}.png`, file }),
       });
       if (uploadRes.ok) {
-        revalidatePath(
-          `https://observe-images.s3.amazonaws.com/projects/${id}.png`
-        );
+        // revalidatePath(
+        //   `https://observe-images.s3.amazonaws.com/projects/${id}.png`
+        // );
         if (!imageUploaded) isUploaded = true;
       }
     }
