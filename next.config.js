@@ -8,5 +8,18 @@ module.exports = {
     ],
     minimumCacheTTL: 0,
   },
+  async headers() {
+    return [
+      {
+        source: "/_next/image(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=70, s-maxage=80, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
   // reactStrictMode: false,
 };
