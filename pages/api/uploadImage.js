@@ -21,6 +21,7 @@ export default async function uploadImage(req, res) {
         "base64"
       ),
       Bucket: process.env.AWS_BUCKET_NAME,
+      CacheControl: "no-cache",
       ContentEncoding: "base64",
       ContentType: "image/jpeg",
       Key: key,
