@@ -11,8 +11,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/:all*(svg|jpg|png)",
-        locale: false,
+        source: "/_next/image(.*)",
         headers: [
           {
             key: "Cache-Control",
