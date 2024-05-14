@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { revalidatePath } from "next/cache";
 import Head from "next/head";
 import { BsImage } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
@@ -45,7 +46,12 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
         method: "PUT",
         body: JSON.stringify({ key: `projects/${id}.png`, file }),
       });
-      if (uploadRes.ok && !imageUploaded) isUploaded = true;
+      if (uploadRes.ok) {
+        revalidatePath(
+          `https://observe-images.s3.amazonaws.com/projects/${id}.png`
+        );
+        if (!imageUploaded) isUploaded = true;
+      }
     }
 
     fetch(`/api/edit_project/${id}`, {

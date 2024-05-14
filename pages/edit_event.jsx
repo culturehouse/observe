@@ -46,7 +46,12 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
         method: "PUT",
         body: JSON.stringify({ key: `events/${id}.png`, file }),
       });
-      if (uploadRes.ok && !imageUploaded) isUploaded = true;
+      if (uploadRes.ok) {
+        revalidatePath(
+          `https://observe-images.s3.amazonaws.com/events/${id}.png`
+        );
+        if (!imageUploaded) isUploaded = true;
+      }
     }
 
     fetch(`/api/update_event/${id}`, {
