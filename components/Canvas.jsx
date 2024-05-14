@@ -3,7 +3,6 @@ import { useRef, useEffect, useState } from "react";
 import { BiUndo } from "react-icons/bi";
 import Dropdown from "./Dropdown";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import styles from "../styles/create_instance.module.css";
 
 export const WIDTH = 558;
@@ -334,7 +333,7 @@ export default function Canvas({ setLoggedIn, setCanAccess }) {
               <p className={styles.canvas}> Other</p>
             </button>
           </div>
-          <Image
+          <img
             className={styles.picture}
             src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
             height={559}

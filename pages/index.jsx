@@ -312,7 +312,7 @@ export default function Home() {
                       <div className={styles.project} key={proj.id}>
                         <div className={styles.projectImageWrapper}>
                           {proj.imageUploaded ? (
-                            <Image
+                            <img
                               className={styles.projectImage}
                               src={`https://observe-images.s3.amazonaws.com/projects/${proj.id}.png`}
                               height={200}

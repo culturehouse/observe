@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import InstanceSelection from "../components/InstanceSelection";
 import DensityGraphCreateHeatmap from "../components/DensityGraphCreateHeatmap";
 import Crumbs from "../components/Crumbs";
@@ -225,7 +224,7 @@ export default function Home() {
                 Heatmap preview
               </h3>
               {/* this needs changing */}
-              <Image
+              <img
                 className={styles.backgroundImage}
                 src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
                 height={350}

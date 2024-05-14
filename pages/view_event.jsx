@@ -128,7 +128,7 @@ export default function View_Event() {
           ></Crumbs>
         </div>
         {eventInfo[0]?.imageUploaded ? (
-          <Image
+          <img
             className={styles.picture}
             src={`https://observe-images.s3.amazonaws.com/events/${eventInfo[0]?.id}.png`}
             height={320}

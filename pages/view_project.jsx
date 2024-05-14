@@ -240,7 +240,7 @@ export default function View_Project() {
         <div className={pstyles.middle}>
           <div className={pstyles.pImage}>
             {projectInfo[0].imageUploaded ? (
-              <Image
+              <img
                 className={pstyles.picture}
                 src={`https://observe-images.s3.amazonaws.com/projects/${projectInfo[0]?.id}.png`}
                 height={320}

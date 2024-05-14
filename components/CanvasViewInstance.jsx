@@ -1,7 +1,6 @@
 import React from "react";
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import DensityGraphViewInstance from "./DensityGraphViewInstance";
 import styles from "../styles/create_instance.module.css";
 
@@ -238,7 +237,7 @@ export default function Canvas({ setLoggedIn, instance }) {
     <div className={styles.outer}>
       <div className={styles.content}>
         <div className={styles.leftContent}>
-          <Image
+          <img
             className={styles.pictureViewInstance}
             src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
             height={559}

@@ -3,7 +3,6 @@ import { useRef, useEffect, useState } from "react";
 import { BiUndo } from "react-icons/bi";
 import Dropdown from "./Dropdown";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import styles from "../styles/create_instance.module.css";
 
 const Canvas1 = (props) => {
@@ -317,7 +316,7 @@ export default function Canvas({ setLoggedIn, eventId }) {
               <p className={styles.canvas}> Other</p>
             </button>
           </div>
-          <Image
+          <img
             className={styles.picture}
             src={`https://observe-images.s3.amazonaws.com/events/${router.query.eventId}.png`}
             height={559}
