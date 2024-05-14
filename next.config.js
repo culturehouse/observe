@@ -11,7 +11,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/_next/image(.*)",
+        source: "https://culturehouse-dev.vercel.app/_next/image(.*)",
         headers: [
           {
             key: "Cache-Control",
