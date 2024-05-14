@@ -15,11 +15,7 @@ module.exports = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=70, s-maxage=80, must-revalidate",
-          },
-          {
-            key: "X-Vercel-Cache",
-            value: "MISS",
+            value: "public, max-age=0, s-maxage=0, stale-while-revalidate",
           },
         ],
       },
