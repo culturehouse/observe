@@ -11,11 +11,11 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "https://culturehouse-dev.vercel.app/_next/image(.*)",
+        source: "/_next/image(.*)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=0, must-revalidate",
+            value: "public, max-age=100, s-maxage=100, must-revalidate",
           },
         ],
       },
