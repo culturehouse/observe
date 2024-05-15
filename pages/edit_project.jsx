@@ -17,6 +17,7 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
   const [coverFile, setCoverFile] = useState(
     projectInfo[0]?.imageUploaded ? { name: `${projectInfo[0]?.id}.png` } : null
   );
+  const [filePath, setFilePath] = useState("");
 
   const postToDatabase = async () => {
     const id = projectInfo[0]?.id;
@@ -71,11 +72,16 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
       });
   };
 
-  const handleFileChange = (files) => {
-    if (files) {
-      setCoverFile(files[0]);
-    } else {
+  const handleFileChange = (e) => {
+    if (!e) {
       setCoverFile(null);
+      setFilePath("");
+    } else {
+      const { files, value } = e.target;
+      if (files) {
+        setCoverFile(files[0]);
+        setFilePath(value);
+      }
     }
   };
 
@@ -113,7 +119,8 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
             <input
               className={styles.fileInput}
               type="file"
-              onChange={(e) => handleFileChange(e.target.files)}
+              onChange={handleFileChange}
+              value={filePath}
             />
             <BsImage />
             <p>{coverFile ? coverFile.name : "Upload cover image"}</p>

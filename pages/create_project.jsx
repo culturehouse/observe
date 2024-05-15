@@ -17,6 +17,7 @@ export default function Projects({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [projectImage, setProjectImage] = useState(null);
+  const [filePath, setFilePath] = useState("");
   const [postInProgress, setPostInProgress] = useState(false);
 
   const router = useRouter();
@@ -81,11 +82,16 @@ export default function Projects({
       });
   };
 
-  const handleFileChange = (files) => {
-    if (files) {
-      setProjectImage(files[0]);
-    } else {
+  const handleFileChange = (e) => {
+    if (!e) {
       setProjectImage(null);
+      setFilePath("");
+    } else {
+      const { files, value } = e.target;
+      if (files) {
+        setProjectImage(files[0]);
+        setFilePath(value);
+      }
     }
   };
 
@@ -124,7 +130,8 @@ export default function Projects({
             <input
               className={styles.fileInput}
               type="file"
-              onChange={(e) => handleFileChange(e.target.files)}
+              onChange={handleFileChange}
+              value={filePath}
             />
             <BsImage />
             <p>

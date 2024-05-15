@@ -20,6 +20,7 @@ export default function Events({
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
   const [sketch, setSketch] = useState(null);
+  const [filePath, setFilePath] = useState("");
   const [eventUploaded, setEventUploaded] = useState(false);
   const [eventUploadRes, setEventUploadRes] = useState({});
   const [showClipboard, setShowClipboard] = useState(false);
@@ -104,11 +105,16 @@ export default function Events({
       });
   };
 
-  const handleFileChange = (files) => {
-    if (files) {
-      setSketch(files[0]);
-    } else {
+  const handleFileChange = (e) => {
+    if (!e) {
       setSketch(null);
+      setFilePath("");
+    } else {
+      const { files, value } = e.target;
+      if (files) {
+        setSketch(files[0]);
+        setFilePath(value);
+      }
     }
   };
 
@@ -228,7 +234,8 @@ export default function Events({
             <input
               className={styles.fileInput}
               type="file"
-              onChange={(e) => handleFileChange(e.target.files)}
+              onChange={handleFileChange}
+              value={filePath}
             />
             <BsImage />
             <p>{sketch ? sketch.name : "Add event sketch (.png)"}</p>

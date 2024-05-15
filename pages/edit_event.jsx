@@ -18,6 +18,7 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
   const [sketchFile, setSketchFile] = useState(
     eventInfo[0]?.imageUploaded ? { name: `${eventInfo[0]?.id}.png` } : null
   );
+  const [filePath, setFilePath] = useState("");
 
   const postToDatabase = async () => {
     const id = eventInfo[0]?.id;
@@ -75,11 +76,16 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
       });
   };
 
-  const handleFileChange = (files) => {
-    if (files) {
-      setSketchFile(files[0]);
-    } else {
+  const handleFileChange = (e) => {
+    if (!e) {
       setSketchFile(null);
+      setFilePath("");
+    } else {
+      const { files, value } = e.target;
+      if (files) {
+        setSketchFile(files[0]);
+        setFilePath(value);
+      }
     }
   };
 
@@ -131,7 +137,8 @@ export default function Events({ setShowCreateEvent, eventInfo = [] }) {
             <input
               className={styles.fileInput}
               type="file"
-              onChange={(e) => handleFileChange(e.target.files)}
+              onChange={handleFileChange}
+              value={filePath}
             />
             <BsImage />
             <p>{sketchFile ? sketchFile.name : "Upload event sketch"}</p>
