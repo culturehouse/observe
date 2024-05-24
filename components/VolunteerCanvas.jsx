@@ -82,10 +82,8 @@ const CanvasMain = ({
     snsDataArray.forEach((element) => {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
-      const circle = new Path2D();
       if (element.position == "other") {
         const circle = new Path2D();
-
         context.fillStyle = "#8DBE40";
         circle.arc(element.xcor, element.ycor, 25, 0, 2 * Math.PI);
         context.fill(circle);
@@ -102,6 +100,7 @@ const CanvasMain = ({
       }
     });
   };
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = 558;
@@ -115,10 +114,8 @@ const CanvasMain = ({
     const { offsetX, offsetY } = nativeEvent;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const circle = new Path2D();
     if (position == "other") {
       const circle = new Path2D();
-
       context.fillStyle = "#8DBE40";
       circle.arc(offsetX, offsetY, 25, 0, 2 * Math.PI);
       context.fill(circle);

@@ -1,5 +1,4 @@
-import React from "react";
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { BiUndo } from "react-icons/bi";
 import Dropdown from "./Dropdown";
 import { useRouter } from "next/router";
@@ -71,74 +70,47 @@ const Canvas3 = (props) => {
   return <canvas ref={canvasRef} {...props} width={100} height={80} />;
 };
 
-const CanvasMain = ({
-  position,
-  setsnsDataArray,
-  snsDataArray,
-  setSize,
-  size,
-}) => {
+const CanvasMain = ({ position, setsnsDataArray, snsDataArray, setSize }) => {
   const canvasRef = useRef(null);
 
   const drawCur = () => {
     console.log("Drawing array of length", snsDataArray.length);
     snsDataArray.forEach((element) => {
+      const { position, xcor, ycor } = element;
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
-      const circle = new Path2D();
-      if (element.position == "other") {
+      if (position == "other") {
         const circle = new Path2D();
-
         context.fillStyle = "#8DBE40";
-        circle.arc(element.xcor, element.ycor, 25, 0, 2 * Math.PI);
+        circle.arc(xcor, ycor, 9, 0, 2 * Math.PI);
         context.fill(circle);
-      } else if (element.position == "sitting") {
+      } else if (position == "sitting") {
         context.fillStyle = "#DD3E3E";
-        context.fillRect(element.xcor - 25, element.ycor - 25, 50, 50);
+        context.fillRect(xcor - 8, ycor - 8, 16, 16);
       } else {
         context.fillStyle = "#F8B319";
         context.beginPath();
-        context.moveTo(element.xcor, element.ycor - 40);
-        context.lineTo(element.xcor - 25, element.ycor + 20);
-        context.lineTo(element.xcor + 25, element.ycor + 20);
+        context.moveTo(xcor, ycor - 8);
+        context.lineTo(xcor - 10, ycor + 10);
+        context.lineTo(xcor + 10, ycor + 10);
         context.fill();
       }
     });
   };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-    drawCur();
   }, []);
 
-  useEffect(() => drawCur(), [snsDataArray]);
+  useEffect(drawCur, [snsDataArray]);
 
   const draw = async ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    const circle = new Path2D();
-    if (position == "other") {
-      const circle = new Path2D();
-
-      context.fillStyle = "#8DBE40";
-      circle.arc(offsetX, offsetY, 25, 0, 2 * Math.PI);
-      context.fill(circle);
-    } else if (position == "sitting") {
-      context.fillStyle = "#DD3E3E";
-      context.fillRect(offsetX - 25, offsetY - 25, 50, 50);
-    } else {
-      context.fillStyle = "#F8B319";
-      context.beginPath();
-      context.moveTo(offsetX, offsetY - 40);
-      context.lineTo(offsetX - 25, offsetY + 20);
-      context.lineTo(offsetX + 25, offsetY + 20);
-      context.fill();
-    }
     setsnsDataArray([
       ...snsDataArray,
-      { position: position, xcor: offsetX, ycor: offsetY },
+      { position, xcor: offsetX, ycor: offsetY },
     ]);
     setSize(snsDataArray.length + 1);
   };

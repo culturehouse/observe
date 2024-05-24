@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/view_instance.module.css";
 import ObserveLogo from "../components/ObserveLogo";
@@ -7,27 +7,15 @@ import Crumbs from "../components/Crumbs";
 import CanvasViewInstance from "../components/CanvasViewInstance";
 import BackgroundBottom1 from "../components/BackgroundBottom1";
 
-// next 20 lines are just for background display purposes
-// function getWindowDimensions() {
-//   const { innerWidth: width, innerHeight: height } = window;
-//   return {
-//     width,
-//     height
-//   };
-// }
-
 export default function View_Instance() {
   const [instance, setInstance] = useState([{ title: "Loading..." }]);
   const [dataFetched, setDataFetched] = useState(false);
-
-  // const [height, setHeight] = useState(0)
-  const ref = useRef(null);
 
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    if (id) {
+    if (id && !dataFetched) {
       fetch(`/api/view_instance/${id}`, {
         headers: {
           Accept: "application/json",
@@ -80,10 +68,6 @@ export default function View_Instance() {
             ]}
           />
         )}
-        {/* <DensityGraph data={instance[0].data} backgroundLink={`https://observe-images.s3.amazonaws.com/events/${router.query.eventId}.png`}/> */}
-        {/* <div className={styles.densityGraph}>
-          <DensityGraph data={instance[0].data}/>
-        </div> */}
       </div>
     </div>
   );
