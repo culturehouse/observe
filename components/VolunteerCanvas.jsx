@@ -100,7 +100,7 @@ const CanvasMain = ({
       }
     });
   };
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = 558;
@@ -227,7 +227,7 @@ export default function Canvas({ setLoggedIn, eventId }) {
 
     if (!temperature_regex.test(temperature)) {
       alert(
-        "Instance Creation Failed. Please make sure you are entering a number value for the temperature"
+        "Observation Creation Failed. Please make sure you are entering a number value for the temperature"
       );
       return;
     }
@@ -420,7 +420,7 @@ export default function Canvas({ setLoggedIn, eventId }) {
             cols={50}
           ></textarea>
           <button onClick={onCanvasSubmit} className={styles.sendButton}>
-            <p className={styles.InstButton}>CREATE INSTANCE</p>
+            <p className={styles.InstButton}>CREATE OBSERVATION</p>
           </button>
         </div>
       </div>

@@ -215,12 +215,12 @@ export default function View_Event() {
                   }&projName=${router.query ? router.query.projName : ""}`}
                   className={styles.link}
                 >
-                  View all instances
+                  View all observations
                   <BsChevronRight className={styles.chevron} />
                 </Link>
               ) : (
                 <Link href="instances?id=" className={styles.link}>
-                  View all instances
+                  View all observations
                   <BsChevronRight className={styles.chevron} />
                 </Link>
               )}
@@ -287,7 +287,7 @@ export default function View_Event() {
                     <p className={styles.numInstances}>
                       {heatmap.num_instances}
                     </p>
-                    <p className={styles.numInstancesText}>Instances</p>
+                    <p className={styles.numInstancesText}>Observations</p>
                   </div>
                 </div>
               </Link>

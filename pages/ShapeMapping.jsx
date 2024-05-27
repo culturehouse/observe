@@ -18,7 +18,7 @@ export default function Mapping() {
     return (
       <div className={styles.world}>
         <Head>
-          <title>Create new stop and stay instance | Observe</title>
+          <title>Create new stop and stay observation | Observe</title>
         </Head>
         <BackgroundBottom4></BackgroundBottom4>
         <div className={styles.border}>
@@ -32,11 +32,11 @@ export default function Mapping() {
                 },
                 proj: { id: router.query.projId, name: router.query.projName },
               }}
-              ending={"Create instance"}
+              ending={"Create Observation"}
             ></Crumbs>
           </div>
           <div>
-            <p className={styles.create}>Create new instance</p>
+            <p className={styles.create}>Create new observation</p>
           </div>
           <Canvas setLoggedIn={setLoggedIn} setCanAccess={setCanAccess} />
         </div>
