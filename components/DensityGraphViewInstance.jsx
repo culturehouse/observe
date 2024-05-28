@@ -215,10 +215,12 @@ export default function DensityGraph({ data, backgroundLink }) {
   };
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-  }, []);
+    if (canvasRef) {
+      const canvas = canvasRef.current;
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+    }
+  }, [canvasRef]);
 
   useEffect(drawCur, [data]);
 
