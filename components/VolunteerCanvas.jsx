@@ -100,7 +100,7 @@ const CanvasMain = ({
       }
     });
   };
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.width = 558;
@@ -329,7 +329,7 @@ export default function Canvas({ setLoggedIn, eventId }) {
         </div>
         <div className={styles.separator}></div>
         <div className={styles.inputFields}>
-          <p className={styles.volunteer}>Volunteer name</p>
+          <p className={styles.volunteer}>Observer name</p>
           <input
             value={volunteerName}
             onChange={(e) => setVolunteerName(e.target.value)}
