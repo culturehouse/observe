@@ -28,6 +28,8 @@ export default function View_Event() {
   const [showClipboard, setShowClipboard] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [canAccess, setCanAccess] = useState(false);
+  const [beginDate, setBeginDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const ref = useRef(null);
 
@@ -49,6 +51,7 @@ export default function View_Event() {
           setLoggedIn(r.loggedIn);
           setCanAccess(r.access);
           if (r.loggedIn && r.access) {
+            // Get Heatmaps
             setEventInfo(r.events);
             await fetch(`/api/view_event_heatmaps/${id}`, {
               headers: {
@@ -62,14 +65,47 @@ export default function View_Event() {
               .then((res) => {
                 setHeatmaps(res);
               });
+
+              // Get all observations (for date time)
+              fetch(`/api/instances/${id}`, {
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Origin": "*",
+                },
+                method: "GET",
+              })
+                .then((data) => data.json())
+                .then((r) => {
+                  setLoggedIn(r.loggedIn);
+                  setCanAccess(r.access);
+                  if (r.loggedIn && r.access) {
+                    let extremeDates = getExtremeData(r.instances)
+                  }
+                });
           }
           setDataFetched(true);
         });
     }
   }, [id]);
 
-  const convertDate = (heatmap) => {
-    const date = heatmap.dateCreated;
+  //We want to get the earliest and latest date of observations for an event
+  const getExtremeData = (data) => {
+    let beginDate = data[0].dateTime;
+    let endDate = data[0].dateTime;
+    for (let i = 1; i < data.length; i++) {
+      if (data[i].dateTime < beginDate) {
+        beginDate = data[i].dateTime;
+      }
+      if (data[i].dateTime > endDate) {
+        endDate = data[i].dateTime;
+      }
+    }
+    setBeginDate(beginDate);
+    setEndDate(endDate);
+  }
+
+  const convertDate = (date) => {
     const months = [
       "January",
       "February",
@@ -186,7 +222,9 @@ export default function View_Event() {
             <div className={styles.eventInformRow}>
               <div className={styles.eventInfo}>
                 <BsCalendarEvent />
-                <p className={styles.text}>{eventInfo[0]?.date}</p>
+                <p className={styles.text}>
+                  {convertDate(beginDate)} - {convertDate(endDate)}
+                </p>
               </div>
             </div>
             <div className={styles.eventInformRow}>
@@ -281,7 +319,7 @@ export default function View_Event() {
                   <div className={styles.picturePlaceholder} />
                   <h4>{heatmap.name}</h4>
                   <p className={styles.heatmapDate}>
-                    Created on {convertDate(heatmap)}
+                    Created on {convertDate(heatmap.dateCreated)}
                   </p>
                   <div className={styles.numInstancesContainer}>
                     <p className={styles.numInstances}>
