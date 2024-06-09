@@ -71,11 +71,11 @@ export default function Home() {
   const createAggregateSNS = () => {
     if (instances.length == 0) {
       alert(
-        "It isn't possible to create a heatmap without having any instances that belong to the event"
+        "It isn't possible to create a heatmap without having any observations that belong to the event"
       );
       return;
     } else if (Array.from(selectedSet).length == 0) {
-      alert("Please select at least one instance to create your heatmap");
+      alert("Please select at least one observation to create your heatmap");
       return;
     }
 
@@ -168,7 +168,7 @@ export default function Home() {
             ></Crumbs>
           </div>
           <div className={other_styles.topSpace}></div>
-          <h2 style={{ fontWeight: 700, fontSize: 25 }}>Select instances</h2>
+          <h2 style={{ fontWeight: 700, fontSize: 25 }}>Select observations</h2>
           <div style={{ display: "flex" }}>
             <div style={{ width: "65%", display: "relative" }}>
               <InstanceSelection
@@ -265,7 +265,7 @@ export default function Home() {
                 {selectedSet.size}
               </span>
               {"  "}
-              instances
+              observations
             </p>
             <div className={other_styles.bottom}>
               <div

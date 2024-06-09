@@ -26,7 +26,7 @@ export default function DropdownButton({ id, param }) {
             <Link
               href={`/ShapeMapping?id=${id}&eventId=${id}&eventName=${eventName}&projId=${projId}&projName=${projName}`}
             >
-              New instance
+              New observation
             </Link>
           </Dropdown.Item>
         </Dropdown.Menu>
