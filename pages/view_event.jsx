@@ -80,7 +80,9 @@ export default function View_Event() {
                   setLoggedIn(r.loggedIn);
                   setCanAccess(r.access);
                   if (r.loggedIn && r.access) {
-                    let extremeDates = getExtremeData(r.instances)
+                    let extremeDates = getExtremeDates(r.instances)
+                    setBeginDate(extremeDates.beginDate);
+                    setEndDate(extremeDates.endDate);
                   }
                 });
           }
@@ -90,7 +92,7 @@ export default function View_Event() {
   }, [id]);
 
   //We want to get the earliest and latest date of observations for an event
-  const getExtremeData = (data) => {
+  const getExtremeDates = (data) => {
     let beginDate = data[0].dateTime;
     let endDate = data[0].dateTime;
     for (let i = 1; i < data.length; i++) {
@@ -101,8 +103,7 @@ export default function View_Event() {
         endDate = data[i].dateTime;
       }
     }
-    setBeginDate(beginDate);
-    setEndDate(endDate);
+    return {beginDate:beginDate, endDate:endDate}
   }
 
   const convertDate = (date) => {
