@@ -4,7 +4,7 @@ import Image from "next/image";
 import plus from "../public/cb_plus.svg";
 import Link from "next/link";
 
-export default function DropdownButton({ id, param }) {
+export default function CreateButton({ id, param }) {
   const { eventName, projId, projName } = JSON.parse(param);
   return (
     <div className={styles.container}>
@@ -22,7 +22,7 @@ export default function DropdownButton({ id, param }) {
               New heatmap
             </Link>
           </Dropdown.Item>
-          <Dropdown.Item key="instance" className={styles.dd_item}>
+          <Dropdown.Item key="observation" className={styles.dd_item}>
             <Link
               href={`/ShapeMapping?id=${id}&eventId=${id}&eventName=${eventName}&projId=${projId}&projName=${projName}`}
             >
