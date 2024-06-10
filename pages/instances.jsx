@@ -20,7 +20,7 @@ import NoAccess from "../components/NoAccess";
 import PleaseLogin from "../components/PleaseLogin";
 import LoadingPage from "../components/LoadingPage";
 import BackgroundBottom2 from "../components/BackgroundBottom2";
-import ConfirmDeleteInstance from "../components/ConfirmDeleteInstance";
+import ConfirmDeleteObservation from "../components/ConfirmDeleteObservation";
 import styles from "../styles/instances.module.css";
 
 const orderType = {
@@ -318,7 +318,7 @@ export default function Instances() {
                         onClick={(e) => setShowConfirmModal(true)}
                       />
                       {showConfirmModal && (
-                        <ConfirmDeleteInstance
+                        <ConfirmDeleteObservation
                           setIsOpen={setShowConfirmModal}
                           handleConfirm={() => removeInstance(instance.id)}
                         />
