@@ -11,10 +11,10 @@ export default function Mapping() {
         <div className={styles.border}>
           <ObserveLogo></ObserveLogo>
           <div>
-      
+
           </div>
           <div>
-            <p className={styles.create}>Create new instance</p>
+            <p className={styles.create}>Create new observation</p>
           </div>
           <VolunteerCanvas eventId={router.query.eventId}/>
         </div>
