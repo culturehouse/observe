@@ -127,6 +127,7 @@ export default function Heatmap() {
             setHeatmapInfo(r.aggregateSNS);
             if (r.aggregateSNS) {
               setHmap(r.aggregateSNS.data);
+              setSelectedSet(new Set(r.aggregateSNS.instances));
               console.log("OUR DATA");
               console.log(hmap);
               setNotes(r.aggregateSNS.notes);
