@@ -209,7 +209,7 @@ export default function Canvas({ setLoggedIn, setCanAccess }) {
 
     if (!temperature_regex.test(temperature)) {
       alert(
-        "Instance Creation Failed. Please make sure you are entering a number value for the temperature"
+        "Observation Creation Failed. Please make sure you are entering a number value for the temperature"
       );
       setSending(false);
       return;
@@ -257,12 +257,12 @@ export default function Canvas({ setLoggedIn, setCanAccess }) {
           .then((data) => data.json())
           .then((r) => {
             if (r.created) {
-              alert("New instance has been created.\n");
+              alert("New observation has been created.\n");
               router.push(
                 `/instances?id=${router.query.eventId}&eventId=${router.query.eventId}&eventName=${router.query.eventName}&projId=${router.query.projId}&projName=${router.query.projName}`
               );
             } else {
-              alert("New instance creation has failed, please try again.\n");
+              alert("New observation creation has failed, please try again.\n");
               setSending(false);
             }
           });
@@ -417,11 +417,11 @@ export default function Canvas({ setLoggedIn, setCanAccess }) {
               className={styles.sendButton}
               disabled
             >
-              <p className={styles.InstButton}>CREATE INSTANCE</p>
+              <p className={styles.InstButton}>CREATE OBSERVATION</p>
             </button>
           ) : (
             <button onClick={onCanvasSubmit} className={styles.sendButton}>
-              <p className={styles.InstButton}>CREATE INSTANCE</p>
+              <p className={styles.InstButton}>CREATE OBSERVATION</p>
             </button>
           )}
         </div>

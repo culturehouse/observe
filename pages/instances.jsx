@@ -145,7 +145,7 @@ export default function Instances() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Instances | Observe</title>
+        <title>Observations | Observe</title>
       </Head>
       <BackgroundBottom2></BackgroundBottom2>
       <div className={styles.border}>
@@ -160,13 +160,13 @@ export default function Instances() {
                 },
                 proj: { id: router.query.projId, name: router.query.projName },
               }}
-              ending={"Instances"}
+              ending={"Observations"}
             ></Crumbs>
           </div>
           <CreateButton id={id} param={JSON.stringify(router.query)} />
         </div>
         <h1 className={styles.maintitle}>Activity mapping</h1>
-        <p className={styles.subtitle}>Instances</p>
+        <p className={styles.subtitle}>Observations</p>
         <div className={styles.table}>
           <div className={styles.headers}>
             {orderBy != orderType.id ? (
@@ -329,7 +329,7 @@ export default function Instances() {
               })
             ) : (
               <p className={styles.noInstances}>
-                No instances yet - click "Create" -{">"} "New instance" to get
+                No observations yet - click "Create" -{">"} "New observation" to get
                 started!
               </p>
             )}
