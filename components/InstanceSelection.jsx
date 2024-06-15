@@ -403,7 +403,7 @@ export default function InstanceSelection({
 					{moment(instance.time, 'hh').format('LT')}
 				</td>
 				<td style={{ ...paddings }}>{instance.weather}</td>
-				<td style={{ ...paddings }}>{instance.temperature}</td>
+				<td style={{ ...paddings }}>{instance.temperature + "˚F"}</td>
 				<td
 					style={{
 						...paddings,
