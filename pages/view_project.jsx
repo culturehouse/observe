@@ -65,7 +65,7 @@ export default function View_Project() {
     parsedDate = cdate.toString().split("-");
     displayDate = `${parsedDate[1]}/${parsedDate[2]}/${parsedDate[0]}`;
   } else {
-    displayDate = "No Starting Date Yet";
+    displayDate = "No starting date yet";
   }
 
   const goToEvent = (event) => {
