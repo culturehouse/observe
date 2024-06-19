@@ -35,7 +35,7 @@ export default function Login() {
         <>
             <Head>
                 <title>
-                    Forgot Password | Observe
+                    Forgot password | Observe
                 </title>
             </Head>
             <div className={styles.world}>
@@ -52,7 +52,7 @@ export default function Login() {
                     </div> */}
                         <h3><BiMapPin /> Observe</h3>
                         {/* <ObserveLogo></ObserveLogo> */}
-                        <h5>Change Password</h5>
+                        <h5>Change password</h5>
                         <h6>Please enter your email address and we will send you a link to update your password</h6>
                     </div>
                     <div className={styles.form}>

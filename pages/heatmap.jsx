@@ -188,7 +188,7 @@ export default function Heatmap() {
         jsonFilter.start +
         "°F and " +
         jsonFilter.end +
-        "F°"
+        "°F"
       );
     } else if (jsonFilter.type == "time") {
       return (
