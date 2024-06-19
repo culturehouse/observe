@@ -226,7 +226,14 @@ export default function Heatmap() {
 
     const backgroundImagePromise = (async () => {
       if (backgroundLink.includes("observe-images")) {
-        const r = await fetch(`${backgroundLink}`);
+        const r = await fetch(`${backgroundLink}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          method: "GET",
+        });
         if (!r.ok) throw new Error("bad image");
         const backgroundImageData = await r.arrayBuffer();
         return new Uint8Array(backgroundImageData);
@@ -499,12 +506,7 @@ export default function Heatmap() {
             </div>
           </div>
           <div className={styles.download}>
-            <div
-              className={styles.buttonCreate}
-              onClick={() => {
-                pdfGenerate();
-              }}
-            >
+            <div className={styles.buttonCreate} onClick={pdfGenerate}>
               DOWNLOAD HEATMAP
             </div>
           </div>
