@@ -151,7 +151,7 @@ const CanvasMain = ({
     <>
       {/* <div><span className={styles.undoSpan} onClick={onBackPress}><BiUndo /></span></div> */}
       <div className={styles.canvasmain}>
-        {/* <p className={styles.sketch}>Click and drop shapes onto sketch</p> */}
+        {/* <p className={styles.sketch}>Select mode and click on map to mark location</p> */}
         <canvas ref={canvasRef} onClick={draw} tabIndex="0" />
       </div>
     </>

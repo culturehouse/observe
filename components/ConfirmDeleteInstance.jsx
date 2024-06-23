@@ -13,9 +13,9 @@ export default function ConfirmDeleteInstance({
           <FiX size={20} />
         </div>
         <div className={styles.title}>
-          <h3>Delete instance</h3>
+          <h3>Delete observation</h3>
         </div>
-        <h4 className={styles.fieldTitle}>Are you sure to delete instance?</h4>
+        <h4 className={styles.fieldTitle}>Are you sure to delete observation?</h4>
         <div className={styles.createProject}>
           <div className={btnstyles.buttonCreate} onClick={handleConfirm}>
             Confirm

@@ -89,7 +89,7 @@ export default function Projects({ setShowEditProject, projectInfo = [] }) {
     <div className={styles.dimmer}>
       <div className={styles.container}>
         <Head>
-          <title>Edit Project | Observe</title>
+          <title>Edit project | Observe</title>
         </Head>
         <div className={styles.circle}></div>
         <div className={styles.closeButton}>

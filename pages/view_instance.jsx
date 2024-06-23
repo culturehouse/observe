@@ -35,7 +35,7 @@ export default function View_Instance() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>View stop and stay instance | Observe</title>
+        <title>View stop and stay observation | Observe</title>
       </Head>
       <div className={styles.border}>
         <BackgroundBottom1></BackgroundBottom1>
@@ -46,11 +46,11 @@ export default function View_Instance() {
               proj: { name: router.query.projName, id: router.query.projId },
               event: { name: router.query.eventName, id: router.query.eventId },
             }}
-            ending={"View instance"}
+            ending={"View observation"}
           ></Crumbs>
         </div>
         <div className={styles.title}>
-          <h1 className={styles.maintitle}>View instance</h1>
+          <h1 className={styles.maintitle}>View observation</h1>
         </div>
         {instance ? (
           <CanvasViewInstance instance={instance} />

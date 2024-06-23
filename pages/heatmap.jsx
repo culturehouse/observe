@@ -127,6 +127,7 @@ export default function Heatmap() {
             setHeatmapInfo(r.aggregateSNS);
             if (r.aggregateSNS) {
               setHmap(r.aggregateSNS.data);
+              setSelectedSet(new Set(r.aggregateSNS.instances));
               console.log("OUR DATA");
               console.log(hmap);
               setNotes(r.aggregateSNS.notes);
@@ -146,7 +147,7 @@ export default function Heatmap() {
               .then((r) => {
                 setAggregateDataInstances(r.instances);
                 setFilteredInstances(r.instances);
-                console.log("Data Instances");
+                console.log("Data Observations");
                 console.log(aggregateDataInstances);
               });
           }
@@ -177,28 +178,28 @@ export default function Heatmap() {
     let jsonFilter = JSON.parse(filter);
     if (jsonFilter.type == "weather") {
       return (
-        "Instances that were collected during " +
+        "Observations that were collected during " +
         jsonFilter.selected[0].toLowerCase() +
         " weather"
       );
     } else if (jsonFilter.type == "temperature") {
       return (
-        "Instances that had temperatures between " +
+        "Observations that had temperatures between " +
         jsonFilter.start +
         "°F and " +
         jsonFilter.end +
-        "F°"
+        "°F"
       );
     } else if (jsonFilter.type == "time") {
       return (
-        "Instances that were collected between " +
+        "Observations that were collected between " +
         jsonFilter.start +
         " and " +
         jsonFilter.end
       );
     } else if (jsonFilter.type == "volunteerName") {
       return (
-        "Instances that were collected by " + jsonFilter.selected.join(", ")
+        "Observations that were collected by " + jsonFilter.selected.join(", ")
       );
     }
   };
@@ -225,7 +226,14 @@ export default function Heatmap() {
 
     const backgroundImagePromise = (async () => {
       if (backgroundLink.includes("observe-images")) {
-        const r = await fetch(`${backgroundLink}`);
+        const r = await fetch(`${backgroundLink}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          method: "GET",
+        });
         if (!r.ok) throw new Error("bad image");
         const backgroundImageData = await r.arrayBuffer();
         return new Uint8Array(backgroundImageData);
@@ -277,7 +285,7 @@ export default function Heatmap() {
       doc.text(
         17.22,
         233.39,
-        "Number of instances: " +
+        "Number of observations: " +
           (heatmapInfo ? heatmapInfo["num_instances"] : "undefined")
       );
       doc.text(
@@ -411,7 +419,7 @@ export default function Heatmap() {
                   <p>
                     <span className={styles.infoHeaders}>
                       {" "}
-                      Number of instances:{" "}
+                      Number of observations:{" "}
                     </span>
                     {heatmapInfo
                       ? heatmapInfo["num_instances"]
@@ -498,12 +506,7 @@ export default function Heatmap() {
             </div>
           </div>
           <div className={styles.download}>
-            <div
-              className={styles.buttonCreate}
-              onClick={() => {
-                pdfGenerate();
-              }}
-            >
+            <div className={styles.buttonCreate} onClick={pdfGenerate}>
               DOWNLOAD HEATMAP
             </div>
           </div>
