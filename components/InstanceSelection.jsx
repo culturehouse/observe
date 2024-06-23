@@ -134,7 +134,7 @@ const headers = [
 					strokeLinejoin="round"
 				/>
 			</svg>,
-			'Volunteer',
+			'Observer',
 		],
 		orderType.volunteerName,
 	],
