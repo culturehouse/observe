@@ -135,7 +135,7 @@ export default function Events({
           </div>
           <h4>Your unique event code: {eventCode}</h4>
           <p className={styles.italics}>
-            Anyone with the code can add observations via the volunteer login
+            Anyone with the code can add observations via the observer login
           </p>
           <h4>Share your event code below</h4>
           <div className={styles.flexRow}>

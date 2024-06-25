@@ -269,7 +269,7 @@ export default function Instances() {
                 className={styles.header}
                 onClick={() => setTableOrder(orderType.volunteerName)}
               >
-                <BsPerson /> Volunteer{" "}
+                <BsPerson /> Observer{" "}
                 {orderBy == orderType.volunteerName &&
                   (sortAscending ? <BsArrowUp /> : <BsArrowDown />)}
               </p>
@@ -278,7 +278,7 @@ export default function Instances() {
                 className={styles.activeHeader}
                 onClick={() => setTableOrder(orderType.volunteerName)}
               >
-                <BsPerson /> Volunteer{" "}
+                <BsPerson /> Observer{" "}
                 {orderBy == orderType.volunteerName &&
                   (sortAscending ? <BsArrowUp /> : <BsArrowDown />)}
               </p>

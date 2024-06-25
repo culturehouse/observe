@@ -143,7 +143,7 @@ export default function Login({ realm, redirectUri, responseType }) {
           <p className={styles.ntrp}>
             Not the right page?&nbsp;
             <a href="/volunteer_login" className={styles.link}>
-              Log in as a volunteer
+              Log in as a Observer
             </a>
             &nbsp;or&nbsp;
             <a href="/register" className={styles.link}>

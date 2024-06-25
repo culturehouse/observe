@@ -254,7 +254,7 @@ export default function Canvas({ setLoggedIn, instance }) {
         </div>
         <div className={styles.separator}></div>
         <div className={styles.inputFields}>
-          <p className={styles.volunteer}>Volunteer name</p>
+          <p className={styles.volunteer}>Observer name</p>
           <input
             value={volunteerName}
             className={styles.volbox}
