@@ -150,7 +150,7 @@ const CanvasMain = ({
     <>
       {/* <div><span className={styles.undoSpan} onClick={onBackPress}><BiUndo /></span></div> */}
       <div className={styles.canvasmain}>
-        {/* <p className={styles.sketch}>Click and drop shapes onto sketch</p> */}
+        {/* <p className={styles.sketch}>Select mode and click on map to mark location</p> */}
         <canvas ref={canvasRef} onClick={draw} tabIndex="0" />
       </div>
     </>
@@ -254,7 +254,7 @@ export default function Canvas({ setLoggedIn, instance }) {
         </div>
         <div className={styles.separator}></div>
         <div className={styles.inputFields}>
-          <p className={styles.volunteer}>Volunteer name</p>
+          <p className={styles.volunteer}>Observer name</p>
           <input
             value={volunteerName}
             className={styles.volbox}

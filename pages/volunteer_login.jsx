@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Volunteer login | Observe</title>
+        <title>Observer login | Observe</title>
       </Head>
       <div className={styles.world}>
         <LoginBackground />
@@ -72,7 +72,7 @@ export default function Home() {
                         />
                     </div> */}
             <h3>Observe</h3>
-            <h5>Volunteer log in</h5>
+            <h5>Observer log in</h5>
             <h6>Please enter your event code</h6>
           </div>
           <div className={styles.form}>

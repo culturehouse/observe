@@ -269,7 +269,7 @@ export default function Instances() {
                 className={styles.header}
                 onClick={() => setTableOrder(orderType.volunteerName)}
               >
-                <BsPerson /> Volunteer{" "}
+                <BsPerson /> Observer{" "}
                 {orderBy == orderType.volunteerName &&
                   (sortAscending ? <BsArrowUp /> : <BsArrowDown />)}
               </p>
@@ -278,7 +278,7 @@ export default function Instances() {
                 className={styles.activeHeader}
                 onClick={() => setTableOrder(orderType.volunteerName)}
               >
-                <BsPerson /> Volunteer{" "}
+                <BsPerson /> Observer{" "}
                 {orderBy == orderType.volunteerName &&
                   (sortAscending ? <BsArrowUp /> : <BsArrowDown />)}
               </p>
@@ -304,7 +304,7 @@ export default function Instances() {
                       {moment(instance.time, "hh").format("LT")}
                     </p>
                     <p className={styles.field}>{instance.weather}</p>
-                    <p className={styles.field}>{instance.temperature}</p>
+                    <p className={styles.field}>{`${instance.temperature}˚F`}</p>
                     <p className={styles.field}>{instance.volunteerName}</p>
                     <div
                       className={styles.actionBtnContainer}
