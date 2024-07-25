@@ -2,7 +2,6 @@ import React from "react";
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DensityGraphViewInstance from "./DensityGraphViewInstance";
-import DensityGraph from "./DensityGraph";
 import styles from "../styles/create_instance.module.css";
 
 const Canvas1 = (props) => {
@@ -85,17 +84,17 @@ const CanvasMain = ({
       if (element.position == "other") {
         const circle = new Path2D();
         context.fillStyle = "#8DBE40";
-        circle.arc(element.xcor, element.ycor, 25, 0, 2 * Math.PI);
+        circle.arc(element.xcor, element.ycor, 9, 0, 2 * Math.PI);
         context.fill(circle);
       } else if (element.position == "sitting") {
         context.fillStyle = "#DD3E3E";
-        context.fillRect(element.xcor - 25, element.ycor - 25, 50, 50);
+        context.fillRect(element.xcor - 8, element.ycor - 8, 16, 16);
       } else {
         context.fillStyle = "#F8B319";
         context.beginPath();
-        context.moveTo(element.xcor, element.ycor - 40);
-        context.lineTo(element.xcor - 25, element.ycor + 20);
-        context.lineTo(element.xcor + 25, element.ycor + 20);
+        context.moveTo(element.xcor, element.ycor - 8);
+        context.lineTo(element.xcor - 10, element.ycor + 10);
+        context.lineTo(element.xcor + 10, element.ycor + 10);
         context.fill();
       }
     });
@@ -116,17 +115,17 @@ const CanvasMain = ({
     if (position == "other") {
       const circle = new Path2D();
       context.fillStyle = "#8DBE40";
-      circle.arc(offsetX, offsetY, 25, 0, 2 * Math.PI);
+      circle.arc(offsetX, offsetY, 9, 0, 2 * Math.PI);
       context.fill(circle);
     } else if (position == "sitting") {
       context.fillStyle = "#DD3E3E";
-      context.fillRect(offsetX - 25, offsetY - 25, 50, 50);
+      context.fillRect(offsetX - 8, offsetY - 8, 16, 16);
     } else {
       context.fillStyle = "#F8B319";
       context.beginPath();
-      context.moveTo(offsetX, offsetY - 40);
-      context.lineTo(offsetX - 25, offsetY + 20);
-      context.lineTo(offsetX + 25, offsetY + 20);
+      context.moveTo(offsetX, offsetY - 8);
+      context.lineTo(offsetX - 10, offsetY + 10);
+      context.lineTo(offsetX + 10, offsetY + 10);
       context.fill();
     }
     setsnsDataArray([
@@ -234,15 +233,16 @@ export default function Canvas({ setLoggedIn, instance }) {
     <div className={styles.outer}>
       <div className={styles.content}>
         <div className={styles.leftContent}>
-          <img
-            className={styles.pictureViewInstance}
-            src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
-            height={559}
-            width={559}
-          />
+          {eventId && (
+            <img
+              className={styles.pictureViewInstance}
+              src={`https://observe-images.s3.amazonaws.com/events/${eventId}.png`}
+              height={559}
+              width={559}
+            />
+          )}
           <div className={styles.densityGraph}>
             <DensityGraphViewInstance data={instance[0].data} />
-            {/* <DensityGraph data={instance[0].data}/> */}
           </div>
           <CanvasMain
             position={position}

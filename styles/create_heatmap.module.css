@@ -1,20 +1,17 @@
 .heatmapCon {
-    /* margin-left: 2vw; */
-    z-index: 2;
+  /* margin-left: 2vw; */
+  z-index: 2;
 }
 
-
-
 .backgroundImage {
-    position: absolute;
-    /* right: 0; */
-
-    z-index: 0;
-    left: 67%;
-    border-radius: 20px;
+  position: absolute;
+  z-index: 0;
+  left: 67%;
+  border-radius: 20px;
+  object-fit: cover;
 }
 
 .densityGraph {
-    position: absolute;
-    z-index: 1;
+  position: absolute;
+  z-index: 1;
 }

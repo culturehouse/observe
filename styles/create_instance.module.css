@@ -355,23 +355,19 @@
 .picture {
   position: absolute;
   z-index: -1;
-  /* left: 18vw; */
   right: -2px;
   top: 32px;
-  /* top: 11px; */
   border-radius: 25px;
-  /* top: 194px; */
+  object-fit: cover;
 }
 
 .pictureViewInstance {
   position: absolute;
   z-index: -1;
-  /* left: 18vw; */
   right: -2px;
-  /* top: 32px; */
   top: 11px;
   border-radius: 25px;
-  /* top: 194px; */
+  object-fit: cover;
 }
 
 .densityGraph {

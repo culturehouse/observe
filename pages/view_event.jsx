@@ -127,21 +127,19 @@ export default function View_Event() {
             ending={eventInfo[0]?.title ?? ""}
           ></Crumbs>
         </div>
-        {eventInfo[0]?.imageUploaded ? (
+        {/* {eventInfo[0]?.imageUploaded ? (
           <img
-            className={styles.picture}
             src={`https://observe-images.s3.amazonaws.com/events/${eventInfo[0]?.id}.png`}
             height={320}
             width={320}
           />
         ) : (
           <Image
-            className={styles.picture}
             src={`/defaultSketch.png`}
             height={320}
             width={320}
           />
-        )}
+        )} */}
         <div className={styles.header}>
           <div className={styles.title}>
             <h1 className={styles.maintitle}>{eventInfo[0]?.title}</h1>
