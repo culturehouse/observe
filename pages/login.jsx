@@ -36,7 +36,7 @@ export default function Login({ realm, redirectUri, responseType }) {
       function (error, result) {
         if (error) {
           alert(
-            "Login failed, please make sure your email/username and password are correct"
+            "Login failed, please make sure your email/username and password are correct."
           );
           console.log(error);
           return;
